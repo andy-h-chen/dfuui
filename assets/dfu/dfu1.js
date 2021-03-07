@@ -856,7 +856,9 @@ function addOrUpdateDfuSite(id, name) {
     });
 
     //**************** getConfig **************
-    socket.emit('dfu_request', new dfu.Request('query', 'config', id));
+    setTimeout(function() {
+        socket.emit('dfu_request', new dfu.Request('query', 'config', id));
+    }, 3000);
     gui.events.on('config', function(value) {
         if (!value.response || value.response.Interaction.OperationType === 'fail' || value.response.Interaction.DfuId != id) {
             return;

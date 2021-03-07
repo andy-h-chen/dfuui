@@ -5,23 +5,29 @@ var v1       = '/api/v1',
     NotFound = utils.NotFound,
     checkErr = utils.checkErr,
     log      = console.log,
+    ENV = process.env.NODE_ENV || 'development',
     UsersController;
 
 UsersController = function(app, mongoose, config) {
 
-    var User = mongoose.model('User');
+    var User = mongoose.model('User'),
+        succededMsg = {result: 'ok'};
 
-    app.get(v1 + '/users', app.canAccessAdmin, function index(req, res, next) {
+    app.get(v1 + '/users', function index(req, res, next) {
+    //app.get(v1 + '/users', app.canAccessAdmin, function index(req, res, next) {
         console.log(req.url, req.query);
     
-        User.search({query: req.query, fields:{username:1, email:1}}, function(err, users) {
+        User.search({query: req.query, fields:{username:1, email:1, agentId:1}}, function(err, users) {
             checkErr(
                 next,
                 [{ cond: err }],
                 function() {
                     // TODO: finish etag support here, check for If-None-Match
                     res.header('ETag', utils.etag(users));
-                    res.json(users);
+                  if (ENV === 'development') {
+                    res.header('Access-Control-Allow-Origin', '*');
+                  }
+                  res.json(users);
                 }
             );
         });
@@ -39,6 +45,33 @@ UsersController = function(app, mongoose, config) {
                 }
             );
         });
+    });
+    app.post(app.v1 + '/users/allsubagent', app.hasPermission, function(req, res,next) {
+        console.log(req.url, req.body);
+        User.getIdForAllSubAgent(req.body.user.agentId, function(err, result) {
+          if (ENV === 'development') {
+            res.header('Access-Control-Allow-Origin', '*');
+          }
+          res.json(result);
+        });
+    });
+    app.patch(app.v1 + '/users/:id/agentid', app.hasPermission, function(req, res, next) {
+        console.log("patch", req.params.id, req.body.agentId);
+      if (ENV === 'development') {
+        res.header('Access-Control-Allow-Origin', '*');
+      }
+      if (!req.body || req.body.agentId === undefined) {
+        res.status(422).send("err: params incomplete.");
+        return;
+      }
+      User.update({_id: req.params.id},
+                 {$set: {agentId: req.body.agentId}},
+                 function(err, dfu) {
+                     if (err)
+                         res.status(422).send('err:' + err.message);
+                     else
+                         res.json(succededMsg);
+                 });
     });
     app.put(app.v1 + '/users/:id', app.canAccessAdmin, function update(req, res, next) {
         User.findById(req.params.id, false /* details */, function(err, user) {

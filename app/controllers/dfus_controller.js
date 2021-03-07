@@ -3,23 +3,48 @@ var utils    = require('../../lib/utils'),
     NotFound = utils.NotFound,
     checkErr = utils.checkErr,
     log      = console.log,
+    ENV = process.env.NODE_ENV || 'development',
     DfusController;
 
 DfusController = function(app, mongoose, config) {
 
-    var Dfu = mongoose.model('Dfu');
+    var Dfu = mongoose.model('Dfu'),
+        succededMsg = {result: 'ok'};
 
-    app.get(app.v1 + '/dfus', app.canAccessAdmin, function index(req, res, next) {
+    // TODO: remove this, if we go with same origins!!!!!!
+    console.log('ENV = ', ENV + ' url = ', config[ENV].URL);
+    if (ENV === 'development') {
+      app.options('*', function(req, res, next) {
+          console.log('app.options', req.url, req.query);
+          res.header('Access-Control-Allow-Origin', 'http://' + config[ENV].DOMAIN_NAME + ':3000');
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token");
+          res.header("Access-Control-Allow-Methods", "GET,POST,HEAD,OPTIONS,PUT,DELETE,PATCH");
+          res.json();
+      });
+    }
+    app.get(app.v1 + '/dfus', app.hasPermission, function index(req, res, next) {
+    //app.get(app.v1 + '/dfus', function index(req, res, next) {
         console.log(req.url, req.query);
-    
-        Dfu.find(function(err, dfus) {
+
+        Dfu.findWithUserInfo(function(err, dfus) {
             // TODO: finish etag support here, check for If-None-Match
             //res.header('ETag', utils.etag(perms));
+            if (ENV === 'development') {
+              res.header('Access-Control-Allow-Origin', '*');
+            }
             res.json(dfus);
         });
     });
-
-    app.get(app.v1 + '/dfus/:id', app.canAccessAdmin, function show(req, res, next) {
+    app.post(app.v1 + '/dfus/allsubagent', app.hasPermission, function(req, res,next) {
+        console.log(req.url, req.body);
+        Dfu.findByAllSubAgentId(req.body.user.agentId, function(err, result) {
+          if (ENV === 'development') {
+            res.header('Access-Control-Allow-Origin', '*');
+          }
+            res.json(result);
+        });
+    });
+    app.get(app.v1 + '/dfus/:id', app.hasPermission, function show(req, res, next) {
         Dfu.findById(req.params.id, true, function(err, dfu) {
             checkErr(
                 next,
@@ -31,98 +56,102 @@ DfusController = function(app, mongoose, config) {
             );
         });
     });
-    app.put(app.v1 + '/dfus/:id', app.canAccessAdmin, function update(req, res, next) {
+    app.put(app.v1 + '/dfus/:id', app.hasPermission, function update(req, res, next) {
         var attributes = _.pick(req.body, 'users_id');
         Dfu.update({_id: req.params.id}, {$set: {users_id: attributes.users_id}}, function(err, dfu) {
             if (err) {
                 res.status(422).send("err: " + err.message);
             } else {
-                res.json({});
+                res.json(succededMsg);
             }
 
         });
     });
-    app.delete(app.v1 + '/dfus/:id', app.canAccessAdmin, function destroy(req, res, next) {
+    app.patch(app.v1 + '/dfus/:id/users_id', app.hasPermission, function(req, res, next) {
+        console.log("patch", req.params.id, req.body.users_id);
+        if (ENV === 'development') {
+          res.header('Access-Control-Allow-Origin', '*');
+        }
+        if (!req.body || req.body.users_id === undefined) {
+            res.status(422).send("err: params incomplete.");
+            return;
+        }
+        Dfu.update({_id: req.params.id},
+                   {$set: {users_id: req.body.users_id}},
+                   function(err, dfu) {
+                       if (err)
+                           res.status(422).send('err:' + err.message);
+                       else
+                           res.json(succededMsg);
+                   });
+    });
+    app.patch(app.v1 + '/dfus/:id/enabled', app.hasPermission, function(req, res, next) {
+        console.log("patch", req.params.id, req.body.enabled);
+        if (ENV === 'development') {
+          res.header('Access-Control-Allow-Origin', '*');
+        }
+        if (!req.body || req.body.enabled === undefined) {
+            res.status(422).send("err: params incomplete.");
+            return;
+        }
+        Dfu.update({_id: req.params.id},
+                   {$set: {enabled: req.body.enabled}},
+                   function(err, dfu) {
+                       if (err)
+                           res.status(422).send('err:' + err.message);
+                       else
+                           res.json(succededMsg);
+                   });
+    });
+    app.patch(app.v1 + '/dfus/:id/admin_id', app.hasPermission, function(req, res, next) {
+        console.log("patch", req.params.id, req.body.enabled);
+        if (ENV === 'development') {
+          res.header('Access-Control-Allow-Origin', '*');
+        }
+        if (!req.body || req.body.admin_id === undefined) {
+            res.status(422).send("err: params incomplete.");
+            return;
+        }
+        Dfu.update({_id: req.params.id},
+                   {$set: {admin_id: req.body.admin_id}},
+                   function(err, dfu) {
+                       if (err)
+                           res.status(422).send('err:' + err.message);
+                       else
+                           res.json(succededMsg);
+                   });
+    });
+    app.patch(app.v1 + '/dfus/:id/status', app.hasPermission, function(req, res, next) {
+        console.log("patch", req.params.id, req.body.enabled);
+        if (ENV === 'development') {
+          res.header('Access-Control-Allow-Origin', '*');
+        }
+        if (!req.body || req.body.status === undefined) {
+            res.status(422).send("err: params incomplete.");
+            return;
+        }
+        Dfu.update({_id: req.params.id},
+                   {$set: {status: req.body.status}},
+                   function(err, dfu) {
+                       if (err)
+                           res.status(422).send('err:' + err.message);
+                       else
+                           res.json(succededMsg);
+                   });
+    });
+    app.delete(app.v1 + '/dfus/:id', app.hasPermission, function destroy(req, res, next) {
         Dfu.findById(req.params.id, false, function(err, dfu) {
-            if (err) {
-                res.json({error: 'Not Found'});
-            } else {
-                dfu.remove();
-                res.json({});
-            }
+          if (ENV === 'development') {
+            res.header('Access-Control-Allow-Origin', '*');
+          }
+          if (err) {
+              res.json({error: 'Not Found'});
+          } else {
+              dfu.remove();
+              res.json(succededMsg);
+          }
         });
     });
-/*
-    app.delete(app.v1 + '/roles/:id', app.canAccessAdmin, function destroy(req, res, next) {
-        Role.findById(req.params.id, false, function(err, role) {
-            checkErr(
-                next,
-                [{ cond: err }, { cond: !role, err: new NotFound('json') }],
-                function() {
-                    role.remove();
-                    res.json({});
-                }
-            );
-        });
-    });
-    app.put(app.v1 + '/roles/:id', app.canAccessAdmin, function update(req, res, next) {
-        Role.findById(req.params.id, false, function(err, role) {
-            checkErr(
-                next,
-                [{ cond: err }, { cond: !role, err: new NotFound('json') }],
-                function() {
-                    var newAttributes;
-
-                    // modify resource with allowed attributes
-                    newAttributes = _.pick(req.body, 'name', 'permissions_id');
-                    role = _.extend(role, newAttributes);
-
-                    role.save(function(err) {
-                        var errors, code = 200;
-
-                        if (!err) {
-                            // send 204 No Content
-                            res.send();
-                        } else {
-                            errors = utils.parseDbErrors(err, config.error_messages);
-                            if (errors.code) {
-                                code = errors.code;
-                                delete errors.code;
-                                log(err);
-                            }
-                            res.json(errors, code);
-                        }
-                    });
-                }
-            );
-        });
-    });
-
-
-    app.post(app.v1 + '/roles', app.canAccessAdmin, function create(req, res, next) {
-        log('app.post', req.url);
-        var newRole;
-
-        // disallow other fields besides those listed below
-        newRole = new Role(_.pick(req.body, 'name', 'permissions_id'));
-        newRole.save(function(err) {
-            var errors, code = 200, loc;
-            if (!err) {
-                loc = config.site_url + app.v1 + '/roles/' + newRole._id;
-                res.setHeader('Location', loc);
-                res.json(newRole, 201);
-            } else {
-                errors = utils.parseDbErrors(err, config.error_messages, 'name'); // unique field 
-                if (errors.code) {
-                    code = errors.code;
-                    delete errors.code;
-                    // TODO: better better logging system
-                    log(err);
-                }
-                res.json(errors, code);
-            }
-        });
-    });*/
 };
 
 module.exports = DfusController;

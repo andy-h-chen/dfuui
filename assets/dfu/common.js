@@ -17,7 +17,7 @@ $.mobile.switchPopup = function(sourceId, targetId) {
 $( document ).on( "pagecreate", function() {
     $( ".photopopup" ).on({
         popupbeforeposition: function() {
-            var maxHeight = $( window ).height() - 60 + "px";
+            var maxHeight = $( window ).height() - 150 + "px";
             $( ".photopopup img" ).css( "max-height", maxHeight );
         }
     });
@@ -944,8 +944,14 @@ gui.init1 = function () {
     });
 };
 gui.initSocket = function() {
-   var token = window.location.search.substring(1);
-    socket = io.connect(token ? '?token=' + token : '', {'forceNew': true});
+    var token = window.location.search.substring(1);
+    var parameters = '?sessionid=httpswipremocarenetdemosOne-to-Onehtml&'
+                   + 'msgEvent=one-to-one-demo&'
+                   + 'socketCustomEvent=RTCMultiConnection-Custom-Message&'
+                   + 'autoCloseEntireSession=false&'
+                   + 'maxParticipantsAllowed=2&extra={}'
+                   + (token ? '&token=' + token : '');
+    socket = io.connect(parameters, {'forceNew': true});
     socket.on('connect_failed', function() {
         console.log('Connection failed.');
     });
@@ -968,6 +974,9 @@ gui.initSocket = function() {
         }
     });
     socket.on('dfu_data', function(request, response, imageData) {
+    	if (response.Interaction.$.OperationType == "reply_webrtc_room_id") {
+    		console.log(request, response);
+    	}
         if (request) {
             gui.events.emit(request.operation, [{request: request, response: response, imageData: imageData}]);
         } else {

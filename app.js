@@ -7,7 +7,7 @@ var connect = require('connect'),
     io = require('socket.io'),
     socketio_jwt = require('socketio-jwt'),
     jwt = require('jsonwebtoken'),
-    jwt_secret = 'dfuui secret',
+    //jwt_secret = 'dfuui secret',
     connectTimeout = require('connect-timeout'),
     mongoose = require('mongoose'),
     passport = require('passport'),
@@ -26,11 +26,11 @@ var connect = require('connect'),
     https = require('https'),
     ENV = process.env.NODE_ENV || 'development';
 
+const RTCMultiConnectionServer = require('rtcmulticonnection-server');
 process.on('uncaughtException', function (error) {
    console.log(error.stack);
 });
-
-app.debug = true;
+app.debug = ENV === 'development';
 var transport;
 if (!app.debug) {
     transport = new (winston.transports.DailyRotateFile)({
@@ -201,7 +201,7 @@ utils.loadConfig(__dirname + '/config', function(config) {
     var sio = io(server);
 
     sio.use(socketio_jwt.authorize({
-        secret: jwt_secret,
+        secret: config.development.JWT_SECRET,
         handshake: true
     }));
 
@@ -289,13 +289,22 @@ utils.loadConfig(__dirname + '/config', function(config) {
 	});*/
 
     sio.sockets.on('connection', function(socket) {
+        RTCMultiConnectionServer.addSocket(socket, {
+            "socketURL": "/",
+            "homePage": config.URL,
+            "socketMessageEvent": "RTCMultiConnection-Message",
+            "enableAdmin": true,
+            "adminUserName": "admin",
+            "adminPassword": "$10Aday",
+            "enableLogs": true
+        });
+
         var self = this;
         var addr = socket.client.conn.remoteAddress;
         logger.info(new Date() + " New connection from " + addr, socket.decoded_token);
         var debug = true;
 
-        var rproxyClient = new rc.RproxyClient(app, config[ENV]);
-		rproxyClient.connect();
+        var rproxyClient;
 
         var User = mongoose.model('User');
 		var userId = socket.decoded_token;
@@ -304,22 +313,58 @@ utils.loadConfig(__dirname + '/config', function(config) {
                 logger.error('Error occurred in sio.sockets connection, on User.findById');
                 return;
             }
+            // TODO: add a user for android client
+            if (!user) return;
+
             logger.info('Connected username: ', user.username);
             socket.user = user;
 			// get user's dfu list
             user.dfus(function(err, dfus) {
                 socket.dfus = dfus;
                 clients.push(socket);
+                rproxyClient = new rc.RproxyClient(app, config[ENV]);
+                rproxyClientInit();
                 rproxyClient.connect();
             });
         });
+
+        var rproxyClientInit = function() {
+          rproxyClient.on('dfu_data', function(request, response, imageData) {
+              if (!socket.user) return;
+              if (!socket.user.hasAccess('access_admin')) {
+                  // return the full list for admin, otherwise, only return the ones that in the user's list
+                  switch (response.Interaction.$.Replyto) {
+                  case 'list':
+                      if (response.Interaction.Data && response.Interaction.Data[0] && response.Interaction.Data[0].Site) {
+                          var sites = response.Interaction.Data[0].Site;
+                          for (var i=sites.length-1; i>=0; i--) {
+                              var result = socket.dfus.find(function (elm, index, array) {
+                                  if (elm.dfuId.toString() === sites[i].$.DfuId.toString()) return elm;
+                              });
+                              if (!result) {
+                                  sites.splice(i, 1);
+                              }
+                          }
+                      }
+                  }
+              }
+              socket.emit('dfu_data', request, response, imageData);
+          });
+          rproxyClient.on('dfu_error', function(details) {
+              socket.emit('dfu_error', details);
+          });
+        }
+        
         socket.on('disconnect', function() {
+          if (rproxyClient) {
             rproxyClient.destroy();
             delete rproxyClient;
-            //logger.info(new Date() + ' ' + addr + ' disconnected.', socket.user.username);
+          }
+          if (socket.user) {
             User.update({_id: socket.user._id}, {$set: {lastLogout: new Date().toISOString()}}, function(err, result) {
                 if (err) logger.error('update user lastLogout', err);
             });
+          }
             clients.splice(clients.indexOf(socket), 1);
         });
 
@@ -412,30 +457,7 @@ utils.loadConfig(__dirname + '/config', function(config) {
                 }
             });
         });
-        rproxyClient.on('dfu_data', function(request, response, imageData) {
-            if (!socket.user) return;
-            if (!socket.user.hasAccess('access_admin')) {
-                // return the full list for admin, otherwise, only return the ones that in the user's list
-                switch (response.Interaction.$.Replyto) {
-                case 'list':
-                    if (response.Interaction.Data && response.Interaction.Data[0] && response.Interaction.Data[0].Site) {
-                        var sites = response.Interaction.Data[0].Site;
-                        for (var i=sites.length-1; i>=0; i--) {
-                            var result = socket.dfus.find(function (elm, index, array) {
-                                if (elm.dfuId.toString() === sites[i].$.DfuId.toString()) return elm;
-                            });
-                            if (!result) {
-                                sites.splice(i, 1);
-                            }
-                        }
-                    }
-                }
-            }
-            socket.emit('dfu_data', request, response, imageData);
-        });
-        rproxyClient.on('dfu_error', function(details) {
-            socket.emit('dfu_error', details);
-        });
+
         // TODO: move this to upload_controller
         ss(socket).on('file', function(stream, data) {
             var fs = require('fs'),

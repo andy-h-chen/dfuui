@@ -43,6 +43,10 @@ module.exports = function(mongoose) {
 			type: Array,
 			default: []
 		},
+        agentId: {
+            type: String,
+            default: ''
+        },
         dfus_id: [{type: mongoose.Schema.Types.ObjectId, ref: 'Dfu'}],
         roles_id: [{type: mongoose.Schema.Types.ObjectId, ref: 'Role'}],
         perms: [{id: {type:String}, allow: {type: Boolean}, deny: {type: Boolean}, inherit_allow: {type: Boolean}, inherit_deny: {type: Boolean}}],
@@ -80,6 +84,17 @@ module.exports = function(mongoose) {
         Dfu.find({'_id': {$in: this.dfus_id}}, {dfuId: 1, _id: 0}).exec(callback);
     };
 
+    User.statics.getIdForAllSubAgent = function(agentId, callback) {
+        if (agentId === '0') {
+            mongoose.model('User').find().exec(callback);
+            return;
+        }
+        var regex = '^' + agentId;
+        mongoose.model('User').find({'agentId': new RegExp(regex)}).exec(callback);
+    };
+    User.statics.findByAgentId = function(agentId, callback) {
+      mongoose.model('User').find({'agentId': agentId}).exec(callback);
+    };
     User.statics.findById = function findById(id, details, callback) {
         var Model = mongoose.model('User'),
             Role = mongoose.model('Role'),

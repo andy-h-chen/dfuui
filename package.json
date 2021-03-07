@@ -31,12 +31,15 @@
     "nodemailer": "latest",
     "passport": "0.2.2",
     "passport-accesstoken": "latest",
+    "passport-jwt": "4.*",
     "passport-local": "latest",
     "passport-unique-token": "latest",
     "password-hasher": "1.0.1",
+    "rtcmulticonnection-server": "1.3.1",
     "requirejs": "2.0.2",
     "serve-favicon": "2.3.0",
     "serve-index": "1.8.0",
+    "sinon": "^6.1.4",
     "socket.io": "latest",
     "socket.io-stream": "0.8.0",
     "socketio-file-upload": "0.4.1",
@@ -44,19 +47,20 @@
     "uglify-js": "2.7.5",
     "underscore": "*",
     "web-push": "^3.2.5",
+    "webrtc-adapter": "latest",
     "winston": "1.0.1",
     "xml2js": "0.4.17",
     "xmldom": "latest"
   },
   "devDependencies": {
-    "mocha": "1.1.x",
+    "mocha": "3.3.x",
     "should": "0.6.x",
     "request": "2.9.x",
     "ncp": "2.0.0",
     "fs-extra": "9.1.0"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha --ui bdd --recursive --reporter spec --timeout 10000 --slow 300",
+    "test": "mocha",
     "start": "NODE_ENV=development FOREVER_ROOT=$HOME/local/dfuui/forever forever start app.js",
     "stop": "NODE_ENV=development FOREVER_ROOT=$HOME/local/dfuui/forever forever stop app.js"
   },

@@ -34,7 +34,7 @@ ReportsController = function(app, mongoose, config) {
             var errors, code = 200, loc;
 
             if (!err) {
-                res.status(newReport).json(201);
+                res.status(201).json(newReport);
                 //res.json(newReport, 201);
             } else {
                 errors = utils.parseDbErrors(err, config.error_messages, 'key'); // key: unique field

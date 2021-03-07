@@ -2,12 +2,11 @@ var DOMImpl = require('xmldom').DOMImplementation,
   events = require("events"),
   EventEmitter = require("events").EventEmitter,
   net = require('net'),
-  //xml2json = require('./xml2json.js'),
   xml2js = require('xml2js'),
   XMLSerializer = require('xmldom').XMLSerializer,
-  queue = require('./queue.js'),
+  queue = require('../../lib/queue.js'),
 
-  utils = require('./utils.js');
+  utils = require('../../lib/utils.js');
 
 var rc = {};
 
@@ -92,16 +91,15 @@ function RproxyClient(debug, logger, config) {
           self.emit('dfu_data', request, result, imgData);
           var processedMsg = self.responseQueue.shift();
           delete processedMsg;
-          console.log('result.Interaction.$ = ' + JSON.stringify(result.Interaction.$));
-          console.log('processResponse finish one iteration. self.responseQueue.length = ', self.responseQueue.length);
+          //console.log('result.Interaction.$ = ' + JSON.stringify(result.Interaction.$));
+          //console.log('processResponse finish one iteration. self.responseQueue.length = ', self.responseQueue.length);
           setTimeout(self.processResponse, 0);
         }
       });
   	}
   };
   this.dataHandler = function(data) {
-    console.log('dataHandler map.size = ' + self.requestMap.size + ' data.length = ' + data.length);
-    //console.log('dataHandler data.length = ' + data.length + ' data = ' + data);
+    //console.log('dataHandler map.size = ' + self.requestMap.size + ' data.length = ' + data.length);
     if (debug) {
       logger.debug('RproxyClient.dataHandler data.length = ', data.length);
     }
@@ -133,6 +131,7 @@ function RproxyClient(debug, logger, config) {
     		msg.imgLen = header.imgLen;
     		var msgLen = msg.imgLen + msg.length;
     		msg.dataBuffer = new Buffer(header.length);
+        //console.log("dataHandler msg.length = " + msg.length + " msg.imgLen = " + msg.imgLen);
     		if (msgLen < data.length - dataPosition) {
     			// multiple messages in same data event
     			data.copy(msg.dataBuffer, 0, dataPosition, dataPosition + msgLen);

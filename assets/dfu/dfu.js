@@ -102,6 +102,8 @@ gui.convertDataURIToBinary = function(dataURI) {
   }
   return array;
 };
+gui.data1 = "base64,T2dnUwACAAAAAAAAAADSeWyXAU9nZ1MAAAAAAAAAAAAA0nl";
+gui.data="data:audio/ogg;base64,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";
 
 gui.iconPath = '/images/mobile/';
 gui.Button = function(text, icon) {
@@ -179,9 +181,7 @@ gui.MainFunctionButton.prototype.constructor = gui.MainFunctionButton;
 gui.firstLoad = true;
 gui.audioCaptureInit = false;
 
-if (navigator.serviceWorker) {
-    navigator.serviceWorker.register('/sw.js');
-}
+
 
 $(document).on('mobileinit', function() {
     $.mobile.ignoreContentEnabled = true;
@@ -229,6 +229,7 @@ $(document).ready(function() {
         if (!gui.buttonsInitialised) {
             gui.initMainUI();
             gui.initSettingsUI();
+            gui.initVideoUI();
             gui.initAddReport();
             gui.initCommentsUI();
             gui.initReportsUI();
@@ -333,7 +334,6 @@ dfu.initCurrentDfu = function(dfuId, name) {
     gui.events.on('system', systemHandler);
     socket.emit('dfu_request', new dfu.Request('query', 'config', dfuId));
     var configHandler = function(value) {
-console.log(value);
         if (!value.response || value.response.Interaction.$.OperationType === 'fail' || value.response.Interaction.$.DfuId != dfuId) {
             return;
         }
@@ -471,7 +471,15 @@ gui.initMainUI = function() {
     layoutIcons();
     $(window).resize(layoutIcons);
     $(document).on('pageshow', '#mainPage', layoutIcons);
-
+    help.setVClickHandler(function() {
+      //$(':mobile-pagecontainer').pagecontainer('change', '#videoPage', { transition: 'slide' });
+      socket.emit('dfu_request', new dfu.Request('query', 'live_sensor', dfu.currentDfu.id));
+      setTimeout(function() {
+      	socket.emit('dfu_request', new dfu.Request('query', 'live_sensor', dfu.currentDfu.id));
+      	socket.emit('dfu_request', new dfu.Request('query', 'query_webrtc_room_id',  dfu.currentDfu.id));
+      }, 1000);
+      
+    });
     settings.setVClickHandler(function() {
         $(':mobile-pagecontainer').pagecontainer('change', '#settingsPage', { transition: 'slide' });
         //$.mobile.changePage('#settingsPage', { transition: 'slide' });
@@ -674,296 +682,10 @@ gui.initMainUI = function() {
     };
 
     // video
-    var videoTimer;
-    var videoTimerCallback = function() {
-        video.stop = true;
-        $('#videoDivPlay').show();
-        $('#videoDivPause').hide();
-    } 
     video.setVClickHandler(function() {
-        $('#videoDlg').popup('open');
-        video.stop = false;
-        video.getVideoFrame();
-        videoTimer = setTimeout(videoTimerCallback, gui.videoTimeoutInterval);
-        audioCaptureInit();
-        setTimeout(function() {
-            gui.events.emit('start_audio_capture');
-            gui.events.emit('start_dfu_audio');
-        }, 1000);
+    	$(':mobile-pagecontainer').pagecontainer('change', '#videoPage', { transition: 'slide' });
     });
-    $('#videoDlg').bind({
-        popupafterclose: function(event, ui) {
-            video.stop = true;
-            clearTimeout(videoTimer);
-            gui.events.emit('stop_audio_capture');
-            gui.events.emit('stop_dfu_audio');
-        }
-    });
-    $('#videoDivPlay').on('click', function(evt) {
-        video.stop = false;
-        videoTimer = setTimeout(videoTimerCallback, gui.videoTimeoutInterval);
-        $('#videoDivPlay').hide();
-        $('#videoDivPause').show();
-        video.getVideoFrame();
-    });
-    $('#videoDivPause').on('click', function(evt) {
-        clearTimeout(videoTimer);
-        video.stop = true;
-        $('#videoDivPlay').show();
-        $('#videoDivPause').hide();
-    });
-    $('#videoDenied').hide();
-    video.stop = true;
-    video.getVideoFrame = function() {
-        if (video.stop) return;
-
-        socket.emit('dfu_request', new dfu.Request('query', 'live_video', dfu.currentDfu.id, video.streamId));
-        video.getVideoFrameTimeoutId = window.setTimeout(video.getVideoFrame, gui.videoRefreshTimeout);
-    };
-    video.dataHandler = function(value) {
-        if (video.stop) return;
-        if (value.request.dfuId != dfu.currentDfu.id || value.request.sensorId != this.streamId || !value.response || value.response.Interaction.$.OperationType === 'fail') {
-			if (value.response.Interaction.$.OperationType === 'fail') {
-				console.log('video failed');
-			}
-            return;
-        }
-        if (value.response.Interaction.$.OperationType === 'denied') {
-			console.log('video denied');
-            window.clearTimeout(video.getVideoFrameTimeoutId);
-            //gui.events.un('live_video', video.dataHandler);
-            video.stop = true;
-            //video.destroy();
-            //delete video;
-            $('#videoImg').hide();
-            $('#videoDivBeep').hide();
-            $('#videoDivFlash').hide();
-            $('#videoDenied').show();
-            clearTimeout(videoTimer);
-            $('#videoDivPlay').hide();
-            $('#videoDivPause').hide();
-            //$('#videoDlg').css('background-color', 'white');
-            return;
-        }
-        if (!value.imageData || !value.imageData.length) {
-			console.log('video imageData empty');
-			return;
-		}
-
-        if ($('#videoDenied').is(':visible')) {
-            $('#videoImg').show();
-            $('#videoDivBeep').show();
-            $('#videoDivFlash').show();
-            $('#videoDenied').hide();
-            $('#videoDlg').css('background-color', '');
-        }
-        $('#videoDivPlay').hide();
-        $('#videoDivPause').show();
  
-        $('#videoImg').attr('src', 'data:image/jpeg;' + value.imageData);
-        $('#videoDlg').popup('reposition', {positionTo: 'window'});
-    };
-    gui.events.on('live_video', video.dataHandler);
-    //socket.emit('dfu_request', new dfu.Request('query', 'live_video', dfu.currentDfu.id, video.streamId));
-
-
-    //$('#footer').append($('<div id="mainButtonContainerSize" style="position:absolute;left:20;bottom:0;width:200px;"></div>'));
-    //$('#mainButtonContainerSize').text($(document).width() + 'x' + $(document).height());
-
-    var videoDivButtonAction = function(action) {
-        return function() {
-            socket.emit('dfu_request', new dfu.Request('command', action, dfu.currentDfu.id));
-            $(this).addClass('alarmAnimation');
-            var that = $(this);
-            setTimeout(function() {
-                that.removeClass('alarmAnimation');
-            }, 800);
-        }
-    };
-    $('#videoDivFlash').bind('click', videoDivButtonAction('set_flash'));
-    $('#videoDivBeep').bind('click', videoDivButtonAction('set_beep'));
-    
-    // audio
-    var mic = $('#microphone'),
-        speaker = $('#speaker');
-    mic[0].active = true;
-    speaker[0].active = true;
-
-    speaker.on('click', function() {
-        if (this.active) {
-            $(this).prop('src', '/images/mobile/speaker-off.png');
-            socket.emit('dfu_request', new dfu.Request('command', 'stop_audio_stream', dfu.currentDfuId));
-        } else {
-            $(this).prop('src', '/images/mobile/speaker.png');
-            socket.emit('dfu_request', new dfu.Request('command', 'start_audio_stream', dfu.currentDfuId));
-        }
-        this.active = !(this.active);
-    });
-    gui.events.on('start_dfu_audio', function() {
-        if (speaker[0].active) {
-            socket.emit('dfu_request', new dfu.Request('command', 'start_audio_stream', dfu.currentDfuId));
-        }
-    });
-    gui.events.on('stop_dfu_audio', function() {
-        socket.emit('dfu_request', new dfu.Request('command', 'stop_audio_stream', dfu.currentDfuId));
-    });
-    var liveAudioQueue = [];
-    var audioPlayback = $('#audioPlaybackElm')[0];
-    var audioPlaybackEndedListener = function() {
-        if (liveAudioQueue.length > 0) {
-            audioPlayback.src = 'data: audio/mpeg; ' + liveAudioQueue[0];
-            liveAudioQueue.shift();
-            audioPlayback.oncanplay = audioPlayback.play;
-            audioPlayback.load();
-        }
-    };
-    audioPlayback.onended = audioPlaybackEndedListener;
-    gui.events.on('audio_frame_up', function(value) {
-        if (!value.imageData) {
-            console.log('null data');
-            return;
-        }
-        console.log('audio_frame_up data.length = ', value.imageData ? value.imageData.length : 0);
-        //console.log(value.imageData);
-        liveAudioQueue.push(value.imageData);
-        if (audioPlayback.paused)
-            audioPlaybackEndedListener();
-    });
-
-    var visualize = function(stream, mediaElm, canvasId) {
-        var context = new AudioContext();
-        var src = stream ? context.createMediaStreamSource(stream)
-                         : context.createMediaElementSource(mediaElm);
-        var analyser = context.createAnalyser();
-
-        var canvas = document.getElementById(canvasId);
-        var canvasCtx = canvas.getContext("2d");
-
-        src.connect(analyser);
-        analyser.connect(context.destination);
-
-        analyser.fftSize = 256;
-
-        var bufferLength = analyser.frequencyBinCount;
-        console.log(bufferLength);
-
-        var dataArray = new Uint8Array(bufferLength);
-
-        var WIDTH = canvas.width;
-        var HEIGHT = canvas.height;
-        var bar_width = 8,
-            numOfBars = Math.floor(canvas.width / 10);
-        function renderFrame() {
-            requestAnimationFrame(renderFrame);
-            if (!(stream && stream.activeState || mediaElm)) return;
-            analyser.getByteFrequencyData(dataArray);
-            canvasCtx.globalAlpha = 0.2;
-            canvasCtx.fillStyle = '#B8BBBB';
-            canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-            canvasCtx.fillStyle = '#FF6600';
-            var bar_x = 0
-            for (var i = 0; i < bufferLength; i+=Math.floor(bufferLength/numOfBars)) {
-                bar_x += bar_width + 2;
-                var bar_height = (dataArray[i] / 2);
-                canvasCtx.fillRect(bar_x, canvas.height/2, bar_width, -bar_height);
-                canvasCtx.fillRect(bar_x, canvas.height/2, bar_width, bar_height);
-            }
-        }
-      renderFrame();
-    };
-    visualize(null, audioPlayback, 'audioPlaybackVis');
-    var audioCaptureInit = function() {
-        if (!navigator.mediaDevices.getUserMedia) {
-            console.log('getUserMedia unsupported!');
-            if (mic[0].active) 
-                mic.click();
-            return;
-        }
-        if (gui.audioCaptureInit) {
-            return;
-        }
-        var constraints = { audio: true };
-        var chunks = [];
-        var onSuccess = function(stream) {
-            stream.activeState = true;
-            visualize(stream, null, 'audioCaptureVis');
-            var options = {mimeType: 'audio/ogg; codecs=opus'};
-            var mediaRecorder = new MediaRecorder(stream);
-            var stopRecording = true;
-            var getData = function() {
-                setTimeout(function () {
-                    if (mediaRecorder.state == 'recording') {
-                        mediaRecorder.stop();
-                        if (stopRecording) {
-                            stream.getTracks()[0].enabled = false;
-                            return;
-                        }
-                        startRec();
-                    }
-                }, 2000);
-            };
-            var startRec = function() {
-				//console.log("stream.getTracks()[0].enabled = ", stream.getTracks()[0].enabled);
-				if (!stream.getTracks()[0].enabled) {
-					stream.getTracks()[0].enabled = true;
-				}
-                mediaRecorder.start();
-                getData();
-            };
-            gui.events.on('start_audio_capture', function() {
-				if (!stopRecording) return;
-
-                if (mic[0].active) {
-                    stopRecording = false;
-                    startRec();
-                }
-            });
-            gui.events.on('stop_audio_capture', function() {
-                    stopRecording = true;
-                    stream.getTracks()[0].enabled = false;
-            });
-            mic.on('click', function() {
-                if (this.active) {
-                    $(this).prop('src', '/images/mobile/microphone-off.png');
-                    stopRecording = true;
-                    stream.getTracks()[0].enabled = false;
-                } else {
-                    $(this).prop('src', '/images/mobile/microphone.png');
-                    stopRecording = false;
-                    startRec();
-                }
-                this.active = !(this.active);
-                stream.activeState = this.active;
-                
-            });
-            mediaRecorder.onstop = function(e) {
-                var fileReader = new FileReader();
-                fileReader.onload = function() {
-                    console.log('array buffer length = ', this.result.byteLength);
-                    socket.emit('dfu_request', new dfu.Request('streaming',
-                                                               'audio_frame_down', 
-                                                               dfu.currentDfuId, 
-                                                               null, 
-                                                               {Format: 'ogg', Length: this.result.byteLength}, 
-                                                               this.result));
-                                                               
-                };
-                var blob = new Blob(chunks, { 'type' : 'audio/ogg' });
-                fileReader.readAsArrayBuffer(blob);
-                chunks = [];
-            };
-            mediaRecorder.ondataavailable = function(e) {
-                chunks.push(e.data);
-            };
-			gui.events.emit('start_audio_capture');
-
-        };
-        var onError = function(err) {
-            console.log('The following error occured: ' + err);
-        };
-        navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
-        gui.audioCaptureInit = true;
-    }
     gui.buttonsInitialised = true;
     gui.events.emit('gui_buttons_initialised');
 };
@@ -1434,40 +1156,298 @@ gui.setBackground = function(fileName) {
     });
 }
 
+gui.getTurnCred = function(connection, callback) {
+    let xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      if (xhr.status != 200) {
+        alert('Error ${xhr.status}: ${xhr.statusText}');
+        return;
+      }
+      // TODO: add all iceServers as response
+      // TODO: remove previously pushed turn server
+      var cred = JSON.parse(xhr.response);
+      connection.iceServers.push({
+        url: "turn:wip.remocare.net:3478",
+        credential: cred.password,
+        username: cred.username
+      });
+      callback();
+    };
+    xhr.open('GET', '/getcredential?username=andy');
+    xhr.send();
+}
+
+gui.initVideoUI = function() {
+  var hangupSent = false;
+  var hangup = function() {
+    console.log('hangupSent = ' + hangupSent);
+  	if (!hangupSent) {
+      socket.emit('dfu_request', new dfu.Request('query', 'stop_webrtc_session',  dfu.currentDfu.id));
+  	  hangupSent = true;
+    }
+
+    if (connection) {
+      connection.leave();
+      connection.closeEntireSession(function(arg) {
+        console.log('closeEntireSession callback arg = ' + arg);
+      });
+    }
+    var videos = document.querySelectorAll('video');
+    videos.forEach(function(v) {
+      if (v.srcObject)
+   		v.srcObject.stop();
+   	    v.srcObject = null;
+    });
+  };
+  $('#videoPageBackButton').on('click', function(evt) {
+    hangup();
+    $.mobile.back();
+  });
+
+  $(document).on('pagebeforechange', function(e, data) {
+    if (data.options.fromPage[0].id === 'videoPage') {
+      hangup();
+      //e.preventDefault();
+    }
+  });
+  $(document).on('pagecontainershow', function(evt, ui) {
+    var activePage = $.mobile.pageContainer.pagecontainer("getActivePage");
+    if (activePage.prop('id') !== 'videoPage') return;
+
+    gui.events.once('query_webrtc_room_id', function(value) {
+      console.log(value);
+      if (!value.response || value.response.Interaction.$.OperationType === 'fail' || value.response.Interaction.$.DfuId != dfu.currentDfu.id) {
+      	gui.toast("Invalid response");
+        return;
+      }
+      var response = value.response.Interaction.$;
+      if (response.OperationType == 'live_video_busy') {
+      	gui.toast('Line busy.');
+        $.mobile.back();
+        return;
+      }
+      if (response.OperationType == 'dfu_not_found' || response.OperationType == 'live_video_denied' || response.OperationType != 'reply_webrtc_room_id' || !response.RoomId) {
+      	gui.toast('Live video denied.');
+      	$.mobile.back();
+      	return;
+      }
+      setTimeout(function() {startRTCVideo(response.RoomId)}, 0);
+    });
+    socket.emit('dfu_request', new dfu.Request('query', 'query_webrtc_room_id',  dfu.currentDfu.id));
+    console.log('query_webrtc_room_id sent.');
+    hangupSent = false;
+    initUI();
+
+/*
+    setTimeout(function() {
+    	var res = {response: {Interaction: {$: {OperationType:'reply_webrtc_room_id', DfuId: dfu.currentDfu.id, RoomId:'abcd'}}}};
+    	gui.events.emit('query_webrtc_room_id', [res]);
+    }, 3000);
+*/
+  });
+
+  var initialized = false;
+  var layoutUI = function() {
+    var h = (window.innerHeight - $('#videoPageHeader').height()) - 2;
+	$('#videosContainer').height(h);
+	$('#videosContainer').css('overflow-y', 'hidden');
+
+  	if (window.innerHeight > window.innerWidth) {
+  		$('#localVideo').css("height", h);
+  		$('#remoteVideo').css("height", h);
+  		$('#localVideo').css("width", "");
+  		$('#remoteVideo').css("width", "");
+
+  	} else {
+  		$('#localVideo').css("width", "100%");
+  		$('#remoteVideo').css("width", "100%");
+  		$('#localVideo').css("height", "");
+  		$('#remoteVideo').css("height", "");
+  	}
+  };
+  $(window).on('resize', function() {
+  	setTimeout(layoutUI, 1000);
+  });
+  var initUI = function() {
+    if (initialized) return;
+
+    initialized = true;
+  	// UI init
+	$('#videosContainer').on('click', function(evt) {
+	    if ($('#icons').hasClass('active'))
+	    	$('#icons').removeClass('active');
+	    else
+	  		$('#icons').addClass('active');
+	});
+	layoutUI();
+	$('#mute-video').on('click', function(evt) {
+	  evt.stopPropagation();
+	  var localVideo = $('#localVideo')[0];
+	  if (!localVideo.srcObject) 
+	  	localVideo = $('#miniVideo')[0];
+	  if (!localVideo.srcObject) return;
+
+	  var videoTracks = localVideo.srcObject.getVideoTracks();
+	  videoTracks.forEach(function(t) {
+	  	t.enabled = !t.enabled;
+	  });
+	});
+	$('#mute-audio').on('click', function(evt) {
+	  evt.stopPropagation();
+	  var localVideo = $('#localVideo')[0];
+	  if (!localVideo.srcObject) 
+	  	localVideo = $('#miniVideo')[0];
+	  if (!localVideo.srcObject) return;
+
+	  var videoTracks = localVideo.srcObject.getAudioTracks();
+	  videoTracks.forEach(function(t) {
+	  	t.enabled = !t.enabled;
+	  });
+	});
+    $('#hangup').on('click', function(evt) {
+      evt.stopPropagation();
+      if (hangupSent) return;
+
+      hangup();
+      $.mobile.back();
+    });
+    $('#switch-video').on('click', function(evt) {
+    	evt.stopPropagation();
+    	var miniVideo = $('#miniVideo')[0];
+    	// No mini video, no switch
+    	if (!miniVideo.srcObject) return;
+
+    	var remoteVideo = $('#remoteVideo')[0];
+    	var localVideo = $('#localVideo')[0];
+    	if (remoteVideo.srcObject) {
+    		localVideo.srcObject = miniVideo.srcObject;
+    		localVideo.play();
+    		miniVideo.srcObject = remoteVideo.srcObject;
+    		miniVideo.play();
+    		//remoteVideo.srcObject.stop();
+    		remoteVideo.srcObject = null;
+    	} else if (localVideo.srcObject) {
+    		remoteVideo.srcObject = miniVideo.srcObject;
+    		remoteVideo.play();
+    		miniVideo.srcObject = localVideo.srcObject;
+    		miniVideo.play();
+    		//localVideo.srcObject.stop();
+    		localVideo.srcObject = null;
+    	}
+    });
+  };
+  var startRTCVideo = function(roomId) {
+  	console.log('startRTCVideo userid = ' + connection.userid + ' roomId = ' + roomId);
+    var openOrJoinHandler =  function(isRoomExist, roomid, error) {
+      if (error) {
+          if (error === connection.errors.ROOM_NOT_AVAILABLE) {
+              console.log('This room does not exist. Please either create it or wait for moderator to enter in the room.' + roomId);
+              connection.join(roomId, function(isJoined, roomId, error) {
+                console.log('isJoined = ' + isJoined + ' roomid = ' + roomId + ' error = '+ error);
+              });
+              return;
+          }
+          if (error === connection.errors.ROOM_FULL) {
+              console.log('Room is full. ' + roomId);
+              return;
+          }
+          console.error(error);
+      } else {
+        if (connection.isInitiator === true)
+          console.log("connection.isInitiator", connection);
+      }
+    };
+    gui.getTurnCred(connection, function () {
+      connection.openOrJoin(roomId, openOrJoinHandler);
+    });
+  };
+  var connection = new RTCMultiConnection();
+  connection.enableLogs = false;
+  connection.setSocket(socket);
+  connection.socketMessageEvent = 'one-to-one-demo';
+  connection.autoCloseEntireSession = true;
+  connection.session = {
+    audio: true,
+    video: true
+  };
+  connection.sdpConstraints.mandatory = {
+      OfferToReceiveAudio: true,
+      OfferToReceiveVideo: true
+  };
+  connection.videosContainer = document.getElementById('videosContainer');
+  connection.onstream = function(event) {
+      var video;
+
+      if (event.type === 'local') {
+      	var remoteVideo = $('#remoteVideo')[0];
+      	if (remoteVideo.srcObject && remoteVideo.srcObject.streamid) {
+      		video = $('#miniVideo')[0];
+      	} else {
+      		video = $('#localVideo')[0];
+      	}
+        video.volume = 0;
+        try {
+            video.setAttributeNode(document.createAttribute('muted'));
+        } catch (e) {
+            video.setAttribute('muted', true);
+        }
+      } else {
+      	video = $('#remoteVideo')[0];
+      	var localVideo = $('#localVideo')[0];
+      	if (localVideo.srcObject && localVideo.srcObject.streamid) {
+      	  var miniVideo = $('#miniVideo')[0];
+      	  miniVideo.srcObject = localVideo.srcObject;
+      	  miniVideo.play();
+      	  localVideo.srcObject = null;
+      	}
+      }
+      video.srcObject = event.stream;
+
+      setTimeout(function() {
+          video.play();
+      }, 1000);
+
+      video.streamid = event.streamid;
+  };
+
+  connection.onstreamended = function(event) {
+    var videos = document.querySelectorAll('video');
+    videos.forEach(function(v) {
+      if (v.srcObject && v.srcObject.streamid == event.streamid) {
+   		v.srcObject.stop();
+   	    v.srcObject = null;
+   	  }
+    });
+  };
+
+  connection.onMediaError = function(e) {
+    console.log(e);
+      if (e.message === 'Concurrent mic process limit.') {
+          if (DetectRTC.audioInputDevices.length <= 1) {
+              alert('Please select external microphone. Check github issue number 483.');
+              return;
+          }
+
+          var secondaryMic = DetectRTC.audioInputDevices[1].deviceId;
+          connection.mediaConstraints.audio = {
+              deviceId: secondaryMic
+          };
+
+          //document.getElementById('join-room').onclick();
+      }
+  };
+  connection.changeUserId(null, function() {
+    console.log('connection userid changed. ' + connection.userid);
+  });
+  connection.onleave = function(evt) {
+    if (evt.remoteUserId != connection.userid) {
+      $('#hangup').click();
+    }
+  };
+};
+
 gui.initSettingsUI = function() {
     // Settings General Alarm Options
-	//Bao Test swipe left and right to change page
-    /*
-	$(document).on('swipeleft', 'div[data-role*="swipePage"]', function(event) {
-
-							
-		if(event.handled !== true) // This will prevent event triggering more then once
-			{    
-				var nextpage = $.mobile.activePage.next('div[data-role="swipePage"]');
-				// swipe using id of next page if exists
-				if (nextpage.length > 0) {
-					alert("left!!!!!!!!");
-					$.mobile.changePage(nextpage, {transition: "slide", reverse: false}, true, true);
-				}
-				event.handled = true;
-			}
-		return false;				
-	});
-
-$(document).on('swiperight', 'div[data-role*="content"]', function(event) {
-				//alert("right!!!!!!!!");     
-		if(event.handled !== true) // This will prevent event triggering more then once
-		{      
-			var prevpage = $(this).prev('div[data-role="swipePage"]');
-			if (prevpage.length > 0) {
-				$.mobile.changePage(prevpage, {transition: "slide", reverse: true}, true, true);
-			}
-			event.handled = true;
-		}
-		return false;    
-	});
-	///////////End Bao'test-----------------------------
-*/	
     $('#settingsPageBackButton').on('click', function(evt) {
         $.mobile.back();
     });	
