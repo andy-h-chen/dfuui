@@ -1,0 +1,116 @@
+{
+    "nav": {
+        "home": "Home",
+        "page1": "Page One",
+        "page2": "Page 2"
+    },
+    "login": {
+        "language": "Language",
+        "english": "English",
+        "chinese": "中文",
+        "title": "Member Login",
+        "email": "Email",
+        "password": "Password",
+        "showpassword": "Show Password",
+        "submit": "Login"
+    },
+    "common": {
+        "header": {
+            "back": "Back",
+            "save": "Save"
+        },
+        "buttons": {
+            "enable": "Enable",
+            "submit": "Submit",
+            "cancel": "Cancel"
+        }
+    },
+    "mainPage": {
+        "selectSite": "Please select site:",
+        "noAlarm": "No Alarm",
+        "alarmContent" : "{{name}} is detected at {{time}}",
+        "refresh": "Refresh",
+        "notAvailable": "Site list is not available, it could be the site that you have permission is not turned on, please check if RemoCare app is launched and try again.",
+        "statusDlg": {
+            "title": "Stauts",
+            "activity": "Activity",
+            "comfortable": "Comfortable",
+            "medicine": "Medicine",
+            "normalLiving": "Normal Living"
+        },
+        "motionDlg": {
+            "title": "Real Time Motion"
+        },
+        "videoDlg": {
+            "videoDenied": "Video is denied."
+        },
+        "button": {
+            "Status": "Status",
+            "SOS": "SOS",
+            "Wander": "Wander",
+            "Fall" : "Fall",
+            "Abnormal": "Abnormal",
+            "Motion": "Motion",
+            "Video": "Video",
+            "Comments": "Comments",
+            "History": "History",
+            "Settings": "Settings",
+            "Logout": "Logout"
+        }
+    },
+    "commentsPage": {
+        "addComment": "Add Comment",
+        "info": "The information below is the data entered on a daily basis. It may seem technical at times.",
+        "caregiverName": "Caregiver",
+        "content": "Content",
+        "image": "Image",
+        "audio": "Audio",
+        "file": "File",
+        "title": "Comments for {{siteName}}"
+    },
+    "historyPage": {
+        "title": "History"
+    },
+    "settingsPage": {
+        "title": "Settings",
+        "navbar": {
+            "motion": "Motion",
+            "wander": "Wander",
+            "fall": "Fall",
+            "password": "Password"
+        },
+        "motion": {
+            "title": "Motion Alarm Options",
+            "alarmPeriod": "Choose Alarm Period:",
+            "area": "Send alarm when activies percentage falls into the area of:",
+            "thresholds": "Drag handle on the right to set alarm thresholds:",
+            "hour": "Hour",
+            "day": "Day",
+            "week": "Week",
+            "month": "Month",
+            "red": "Red",
+            "yellow": "Yellow",
+            "green": "Green",
+            "average": "Average motion of last {{period}} is {{value}}"
+        },
+        "wander": {
+            "title": "Wander Alarm Settings",
+            "detection": "Wander detection",
+            "doorFinding": "Door Finding",
+            "sensitivity": "Sensitivity",
+            "position": "Door Position Settings"
+        },
+        "fall": {
+            "title": "Fall Detection Options",
+            "detection": "Fall Detection",
+            "falseAlarmLearning": "False Alarm Learning",
+            "sensitivity": "Sensitivity"
+        },
+        "password": {
+            "title": "Change Password",
+            "oldPassword": "Old Password",
+            "newPassword": "New Password",
+            "repeatNewPassword": "Repear New Password"
+        }
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "name": "DFUUI",
+    "dependencies": {
+        "jplayer": "2.9.*"
+    }
+}

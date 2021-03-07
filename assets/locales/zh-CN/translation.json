@@ -1,0 +1,144 @@
+{
+           "nav": {
+                "home": "Home",
+                "page1": "Page One",
+                "page2": "Page 2"
+            },
+    "login": {
+        "language": "语言",
+        "english": "English",
+        "chinese": "中文",
+        "title": "用户登录",
+        "email": "电子邮箱",
+        "password": "密码",
+        "showpassword": "显示密码",
+        "submit": "登录"
+    },
+    "common": {
+        "header": {
+            "back": "返回",
+            "save": "保存"
+        },
+        "buttons": {
+            "enable": "开启",
+            "submit": "提交",
+            "cancel": "取消",
+            "ok": "确定"
+        }
+    },
+    "mainPage": {
+        "siteListTitle": "我的节点",
+        "selectSite": "请选择节点:",
+        "noAlarm": "没有信息",
+        "alarmContent" : "{{name}} 警报， 时间：{{time}}",
+        "refresh": "刷新",
+        "notAvailable": "没有节点信息，请稍后再试.",
+        "statusDlg": {
+            "title": "状态",
+            "activity": "活动情况",
+            "comfortable": "舒适度",
+            "medicine": "服药情况",
+            "normalLiving": "日常起居"
+        },
+        "motionDlg": {
+            "title": "实时动态"
+        },
+        "videoDlg": {
+            "videoDenied": "用户禁止使用视频."
+        },
+        "button": {
+            "Status": "状态",
+            "SOS": "紧急呼叫",
+            "Wander": "走失",
+            "Fall" : "跌倒",
+            "Abnormal": "活动量异常",
+            "Motion": "动态",
+            "Video": "视频",
+            "Comments": "日志",
+            "History": "历史状态",
+            "Settings": "设置",
+            "Sitelist": "选择站点",
+            "Logout": "退出登录",
+            "Help": "帮助"
+        }   
+    },
+    "commentsPage": {
+        "addComment": "添加日志",
+        "addYourComment": "请输入日志...",
+        "info": "The information below is the data entered on a daily basis. It may seem technical at times.",
+        "caregiverName": "填写人姓名",
+        "content": "日志内容",
+        "image": "图片",
+        "audio": "音频",
+        "file": "文件",
+        "title": "{{siteName}} 的日志"
+    },
+    "historyPage": {
+        "title": "历史记录",
+        "navbar": {
+            "daily": "每日",
+            "monthly": "每月"
+        },
+        "historyOf": "{{date}} 历史记录",
+        "plot": {
+            "motion": "日常活动",
+            "wanderin": "进门",
+            "wanderout": "出门",
+            "sos": "紧急呼叫",
+            "fall": "跌倒",
+            "abnormal": "活动量异常"
+        }
+    },
+    "settingsPage": {
+        "title": "设置",
+        "navbar": {
+            "motion": "动态",
+            "wander": "走失",
+            "fall": "跌倒",
+            "general": "常规设置"
+        },
+        "sendAlarmEmail": "通知护理人员",
+        "chooseTime": "每{{period}}什么时间发送警报?",
+        "motion": {
+            "title": "动态统计报警选项",
+            "alarmPeriod": "报警周期:",
+            "area": "活动频率百分比在以下颜色时报警:",
+            "thresholds": "设定报警界限:",
+            "hour": "小时",
+            "realtime": "实时",
+            "day": "天",
+            "week": "星期",
+            "month": "月",
+            "red": "红",
+            "yellow": "黄",
+            "green": "绿",
+            "average": "上一{{period}}的平均动态百分比是{{value}}",
+            "monitoringPeriod": "每日监控时段"
+        },
+        "wander": {
+            "title": "走失警报设置",
+            "detection": "走失检测",
+            "doorFinding": "自动寻找出口",
+            "sensitivity": "敏感度",
+            "position": "设置出口位置"
+        },
+        "fall": {
+            "title": "跌倒检测选项",
+            "detection": "跌倒检测",
+            "falseAlarmLearning": "假警报自动学习",
+            "sensitivity": "敏感度"
+        },
+        "general": {
+            "password": {
+                "title": "修改密码",
+                "oldPassword": "旧密码",
+                "newPassword": "新密码",
+                "repeatNewPassword": "重复新密码"
+            },
+            "background": {
+                "title": "更换背景图片",
+                "upload": "上传背景图片"
+            }
+        }
+    }
+}

@@ -1,0 +1,117 @@
+Let’s generate Certificate Authority first
+
+Private Key
+
+# openssl genrsa -des3 -out ca.key 1024
+Generating RSA private key, 1024 bit long modulus
+...++++++
+...++++++
+e is 65537 (0x10001)
+Enter pass phrase for ca.key:
+Verifying - Enter pass phrase for ca.key:
+Certificate Signing Request
+
+openssl req -new -key ca.key -out ca.csr
+Enter pass phrase for ca.key:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:
+State or Province Name (full name) [Some-State]:
+Locality Name (eg, city) []:
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:
+Organizational Unit Name (eg, section) []:
+Common Name (e.g. server FQDN or YOUR name) []:
+Email Address []:
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:
+An optional company name []:
+Signing the certificate
+
+# openssl x509 -req -days 365 -in ca.csr -out ca.crt -signkey ca.key
+Signature ok
+subject=/C=AU/ST=Some-State/O=Internet Widgits Pty Ltd
+Getting Private key
+Enter pass phrase for ca.key:
+Now let’s generate the Server Certificate
+
+Private Key with pass phrase
+
+# openssl genrsa -des3 -out server.key 1024
+Generating RSA private key, 1024 bit long modulus
+................................++++++
+.....++++++
+e is 65537 (0x10001)
+Enter pass phrase for server.key:
+Verifying - Enter pass phrase for server.key:
+Certificate Signing Request
+
+# openssl req -new -key server.key -out server.csr
+Enter pass phrase for server.key:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:
+State or Province Name (full name) [Some-State]:
+Locality Name (eg, city) []:
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:
+Organizational Unit Name (eg, section) []:
+Common Name (e.g. server FQDN or YOUR name) []:
+Email Address []:
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:
+An optional company name []:
+Private Key without pass phrase This will remove the pass phrase from the key, this step is crucial without this it will not work
+
+# cp server.key server.key.passphrase
+# openssl rsa -in server.key.passphrase -out server.key
+openssl rsa -in server.key.passphrase -out server.key
+Enter pass phrase for server.key.passphrase:
+writing RSA key
+Signing the certificate
+
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+Signature ok
+subject=/C=AU/ST=Some-State/O=Internet Widgits Pty Ltd
+Getting Private key
+These are the files we have now
+
+ls -la
+total 36
+drwxr-xr-x  2 user user 4096 Sep  5 16:19 .
+drwxr-xr-x 12 user user 4096 Sep  5 16:09 ..
+-rw-r--r--  1 user user  757 Sep  5 16:12 ca.crt
+-rw-r--r--  1 user user  603 Sep  5 16:10 ca.csr
+-rw-r--r--  1 user user  963 Sep  5 16:09 ca.key
+-rw-r--r--  1 user user  757 Sep  5 16:19 server.crt
+-rw-r--r--  1 user user  603 Sep  5 16:16 server.csr
+-rw-r--r--  1 user user  887 Sep  5 16:18 server.key
+-rw-r--r--  1 user user  951 Sep  5 16:17 server.key.passphrase
+There you go now we have everything needed, lets see how we can create a HTTPS server with node.js
+
+var https = require('https'),
+    fs = require('fs'), 
+    express = require('express'), 
+    app = express();
+    
+var secureServer = https.createServer({
+    key: fs.readFileSync('./ssl/server.key'),
+    cert: fs.readFileSync('./ssl/server.crt'),
+    ca: fs.readFileSync('./ssl/ca.crt'),
+    requestCert: true,
+    rejectUnauthorized: false
+}, app).listen('8443', function() {
+    console.log("Secure Express server listening on port 8443");
+});

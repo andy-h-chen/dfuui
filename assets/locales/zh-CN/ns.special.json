@@ -1,0 +1,9 @@
+{
+    "ui": {
+        "titleMemberLogin": "用户登录",
+        "titleEmail": "电子邮箱",
+        "titlePassword": "密码",
+        "titleShowPassword": "显示密码",
+        "titleSubmit": "登录"
+    }
+}

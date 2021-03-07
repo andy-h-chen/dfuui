@@ -1,0 +1,22 @@
+{
+    "HTTPS"       : false,
+    "HOST"        : "127.0.0.1",
+    "PORT"        : 3000,
+    "WS"          : 8080,
+    "RPROXY_PORT" : 4041,
+    "SMTP"        : "smtp.gmail.com",
+    "SMTP_PORT"   : 465,
+    "SMTP_USER"   : "RemoCareMessage@gmail.com",
+    "SMTP_PASS"   : "Winter06",
+    "DEFAULT_EMAIL_SENDER": "RemoCareMessage@gmail.com",
+    "URL"         : "http://login.remocare.net",
+    "V1_LOGIN"    : "/api/v1/auth/login",
+    "JWT_SECRET"  : "dfuui secret",
+    "SALT"        : "83d88386463f0623",
+    "DEMO"        :
+    {
+        "user"   : "demo@remocare.net",
+        "pass"   : "123456qwerty$$@@"
+    }
+}
+

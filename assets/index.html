@@ -1,0 +1,227 @@
+
+<html>
+<head>
+<title>RemoCare Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<script src="/build/jquery.min.js"></script>
+<script src="/jqm/jquery.mobile.min.js"></script>
+<script src="/build/i18next.min.js" ></script>
+<script src="/build/i18next-jquery.min.js" ></script>
+<script src="/build/i18nextXHRBackend.min.js"></script>
+<script src="/build/i18nextBrowserLanguageDetector.min.js"></script>
+<script>
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+$(document).on('pagebeforechange', function(evt) {
+      var queryLng = getParameterByName('lng');
+      //var lng = (window.location.hostname === '101.200.150.189') ? (queryLng) ? queryLng : 'zh-CN' : 'en';
+      //var lng = queryLng;
+      // use plugins and options as needed, for options, detail see
+      // http://i18next.com/docs/
+      i18next
+        .use(i18nextXHRBackend)
+        .use(i18nextBrowserLanguageDetector)
+        .init({
+        debug: 'true',
+        //lng: lng, // evtl. use language-detector https://github.com/i18next/i18next-browser-languageDetector
+        //ns: 'example',
+        backend: {
+            loadPath: '/locales/{{lng}}/{{ns}}.json'
+        },
+        detection: {
+            // order and from where user language should be detected
+            order: ['querystring', 'cookie', 'localStorage', 'navigator'],
+
+            // keys or params to lookup language from
+            lookupQuerystring: 'lng',
+            lookupCookie: 'i18next',
+            lookupLocalStorage: 'i18nextLng',
+
+            // cache user language on
+            caches: ['localStorage', 'cookie']
+
+            // optional expire and domain for set cookie
+            //cookieMinutes: 10,
+            //cookieDomain: 'myDomain'
+        }
+     }, function(err, t) {
+	 	console.log(i18next.language);
+		$('#lngSelect').val(i18next.language).selectmenu('refresh');
+        // for options see
+        // https://github.com/i18next/jquery-i18next#initialize-the-plugin
+        i18nextJquery.init(i18next, $);
+        // start localizing, details:
+        // https://github.com/i18next/jquery-i18next#usage-of-selector-function
+        $('#lng').localize();
+        $('#loginForm').localize();
+        $('#login-submit').attr('value', i18next.t('login.submit'));
+        $('#login-submit').button('refresh');
+
+     });
+});
+var toast=function(msg){
+        $("<div class='ui-loader ui-overlay-shadow ui-body-e ui-corner-all'><h3>"+msg+"</h3></div>")
+        .css({ display: "block", 
+                opacity: 0.90, 
+                position: "fixed",
+                padding: "7px",
+                "text-align": "center",
+                width: "270px",
+                'background-color': 'white',
+                left: ($(window).width() - 284)/2,
+                top: $(window).height()/2 })
+        .appendTo( $.mobile.pageContainer ).delay( 3500 )
+        .fadeOut( 400, function(){
+                $(this).remove();
+        });
+}
+
+$(document).ready(function() {
+	$('#lngSelect').change(function () {
+		var lng = $(this).val();
+		i18next.changeLanguage(lng, function() {
+	        $('#lng').localize();
+			$('#loginForm').localize();
+			$('#login-submit').attr('value', i18next.t('login.submit'));
+			$('#login-submit').button('refresh');
+		});
+	});
+	//$('#lngSelect').closest('.ui-select').addClass('select_small');
+    /*
+    $('#loginForm').submit(function(evt) {
+        var opt = {
+            username: $('#username').val(),
+            password: $('#password').val()
+        };
+        $.ajax({
+            url: '/api/v1/auth/login',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(opt),
+            beforeSend: function(xhr) {
+                var token = $('meta[name="csrf-token"]').attr('content');
+                if (token) {
+                    xhr.setRequestHeader('X-CSRF-Token', token);
+                }
+            },
+            success: function(data, textStatus, jqXHR) {
+                console.log(data);
+                if (!data.user) {
+                    if (data.errorId === 1) {
+                        toast('Username or password incorrect');
+                    }
+                    return;
+                }
+                window.location.href = 'http://' + window.location.host + '/dfu/dfu.html?' + data.token;
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+            }
+        });
+        evt.preventDefault();
+    });*/
+    $('#showPassword').on('change', function() {
+        if ($('#showPassword').is(':checked')) {
+            $('#password').attr('type', 'text');
+        } else {
+            $('#password').attr('type', 'password');
+        }
+    });
+    
+    $('#login-submit').on('vclick', function() {
+        $('#loginForm').submit();
+    });
+    var err = window.location.search.substring(1);
+    switch (err) {
+    case '1':
+        toast('Username or password incorrect');
+        return;
+    case '2':
+        toast('Error occurred during login');
+        return;
+    case '3':
+        toast('Unauthorized. Please login.');
+        return;
+    }
+/*
+    navigator.serviceWorker.register('sw.js');
+    Notification.requestPermission(function(result) {
+        if (result === 'granted') {
+            navigator.serviceWorker.ready.then(function(registration) {
+                registration.showNotification('Notification with ServiceWorker');
+            });
+        }
+    });
+*/
+});
+</script>
+<link rel="icon" 
+      type="image/png" 
+      href="/favicon.png" />
+<style>
+.select_small{
+    width:200px;
+    height:70px;
+}
+</style>
+</head>
+<body>
+<div data-role="page" id='pageContainer'>
+<!--div id='lng'><span data-i18n='login.language'></span>: <a href='index.html?lng=en' data-i18n='login.english' data-ajax='false'></a>&nbsp;<a href='index.html?lng=zh-CN' data-ajax='false' data-i18n='login.chinese'></a>
+</div-->
+<form id="loginForm" method='post' action='/api/v1/auth/login' data-ajax='false'>
+<table border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC" style="font-size:1em">
+    <tr>
+        
+        <td>
+            <table width="100%" border="0" align='center' cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" style="font-size:1em">
+                <tr>
+                    <td colspan="3" align='center'><strong><span id='titleMemberLogin' data-i18n='login.title'></span></strong></td>
+                </tr>
+                <tr>
+                    <td width="78"><span id='titleEmail' data-i18n='login.email'>Email</span></td>
+                    <td width="6">:</td>
+                    <td width="294"><input name="username" type="text" id="username" style="font-size:1em"></td>
+                </tr>
+                <tr>
+                    <td><span id='titlePassword' data-i18n='login.password'>Password</span></td>
+                    <td>:</td>
+                    <td><input name="password" type="password" id="password" value='' style="font-size:1em"></td>
+                </tr>
+                <tr>
+                    <td><td><td><label id='titleShowPassword' data-i18n='login.showpassword'><input type="checkbox" id="showPassword"></label>
+                </tr>
+                <tr>
+                    <td colspan=3 align='center'><input type="submit" id='login-submit' value="Login"></td>
+                </tr>
+                <tr>
+                    <td colspan=2><span data-i18n='login.language'></span></td>
+					<td><select id='lngSelect'>
+<option value='en'>English</option>
+<option value='zh-CN'>简体中文</option>
+<option value='zh-TW'>繁体中文</option>
+</select>
+                </tr>
+            </table>
+        </td>
+        
+    </tr>
+</table>
+</form>
+
+
+<p align='center'>* Email us at <a href='mailto:info@remotron.com'>info@remotron.com</a> for password if you don't have one.</p>
+</div>
+</body>
+</html>
+

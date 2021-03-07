@@ -1,0 +1,8 @@
+{
+  "NAME"      : "Name field is invalid, please enter a name with a length of 2-100 chars.",
+  "EMAIL"     : "Email address is invalid.",
+  "ROOM"      : "Room field is invalid, please enter room",
+  "DFUID"	  : "Camera id field is invalid, please enter a valid id",
+  "COMPANY"   : "Company field is invalid, please enter a company name with a length of 5-100 chars.",
+  "DUPLICATE" : "The field entered already exists, please choose a different one."
+}

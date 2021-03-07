@@ -1,0 +1,28 @@
+Sample turnserver.conf
+====================================================
+# you can listen ports 3478 and 5349 instead of 80/443
+listening-port=3478
+tls-listening-port=5349
+
+listening-ip=10.140.0.2
+
+relay-ip=10.140.0.2
+external-ip=35.221.232.72/10.140.0.2
+
+realm=wip.remocare.net
+server-name=wip.remocare.net
+
+#lt-cred-mech
+#userdb=/home/andy/local/turndb
+
+#oauth
+#user=admin:password
+
+# use real-valid certificate/privatekey files
+cert=/home/andy/local/RTCMultiConnection/ssl/cert1.pem
+pkey=/home/andy/local/RTCMultiConnection/ssl/privkey1.pem
+
+no-stdout-log
+
+use-auth-secret
+static-auth-secret=3711bb27c7e0f999d902f3c41500d2adddfda93c754a0093c0ff009e69731c55

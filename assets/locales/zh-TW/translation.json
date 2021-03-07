@@ -1,0 +1,145 @@
+﻿{
+           "nav": {
+                "home": "Home",
+                "page1": "Page One",
+                "page2": "Page 2"
+            },
+    "login": {
+        "language": "語言",
+        "english": "English",
+        "chinese": "中文",
+        "title": "用戶登錄",
+        "email": "電子郵箱",
+        "password": "密碼",
+        "showpassword": "顯示密碼",
+        "submit": "登錄"
+    },
+    "common": {
+        "header": {
+            "back": "返回",
+            "save": "保存"
+        },
+        "buttons": {
+            "enable": "開啟",
+            "submit": "提交",
+            "cancel": "取消",
+            "ok": "確定"
+        }
+    },
+    "mainPage": {
+        "siteListTitle": "我的節點",
+        "selectSite": "請選擇節點:",
+        "noAlarm": "没有信息",
+        "alarmContent" : "{{name}}警報，時間：{{time}}",
+        "refresh": "刷新",
+        "notAvailable": "沒有節點信息，請稍後再試.",
+        "statusDlg": {
+            "title": "狀態",
+            "activity": "活動情況",
+            "comfortable": "舒適度",
+            "medicine": "服藥情況",
+            "normalLiving": "日常起居"
+        },
+        "motionDlg": {
+            "title": "實時動態"
+        },
+        "videoDlg": {
+            "videoDenied": "用戶禁止使用視頻."
+        },
+        "button": {
+            "Status": "狀態",
+            "SOS": "緊急呼叫",
+            "Wander": "走失",
+            "Fall" : "跌倒",
+            "Abnormal": "活動量異常",
+            "Motion": "動態",
+            "Video": "視頻",
+            "Comments": "日誌",
+            "History": "歷史狀態",
+            "Settings": "設置",
+            "Sitelist": "選擇站點",
+            "Logout": "退出登錄",
+            "Help": "幫助"
+        }   
+    },
+    "commentsPage": {
+        "addComment": "添加日誌",
+        "addYourComment": "請輸入日誌...",
+        "info": "The information below is the data entered on a daily basis. It may seem technical at times.",
+        "caregiverName": "護理人員姓名",
+        "content": "日誌內容",
+        "image": "圖片",
+        "audio": "音頻",
+        "file": "文件",
+        "title": "{{siteName}}的日誌"
+    },
+    "historyPage": {
+        "title": "歷史記錄",
+        "navbar": {
+            "daily": "每日",
+            "monthly": "每月"
+        },
+        "historyOf": "{{date}}歷史記錄",
+        "plot": {
+            "motion": "日常活動",
+            "wanderin": "進門",
+            "wanderout": "出門",
+            "sos": "緊急呼叫",
+            "fall": "跌倒",
+            "abnormal": "活動量異常"
+        }
+    },
+    "settingsPage": {
+        "title": "設置",
+        "navbar": {
+            "motion": "動態",
+            "wander": "走失",
+            "fall": "跌倒",
+            "general": "常規設置"
+        },
+        "sendAlarmEmail": "通知護理人員",
+        "chooseTime": "每{{period}}什麼時間發送警報?",
+        "motion": {
+            "title": "動態統計報警選項",
+            "alarmPeriod": "報警週期:",
+            "area": "活動頻率百分比在以下顏色時報警:",
+            "thresholds": "設定報警界限:",
+            "hour": "小時",
+            "realtime": "實時",
+            "day": "天",
+            "week": "星期",
+            "month": "月",
+            "red": "紅",
+            "yellow": "黃",
+            "green": "绿",
+            "average": "上一{{period}}的平均動態百分比是{{value}}",
+            "monitoringPeriod": "每日監控時段"
+        },
+        "wander": {
+            "title": "走失警報設置",
+            "detection": "走失檢測",
+            "doorFinding": "自動尋找出口",
+            "sensitivity": "敏感度",
+            "position": "設置出口位置"
+        },
+        "fall": {
+            "title": "跌倒檢測選項",
+            "detection": "跌倒檢測",
+            "falseAlarmLearning": "假警報自動學習",
+            "sensitivity": "敏感度"
+        },
+        "general": {
+            "password": {
+                "title": "修改密碼",
+                "oldPassword": "舊密碼",
+                "newPassword": "新密碼",
+                "repeatNewPassword": "重複新密碼"
+            },
+            "background": {
+                "title": "更換背景圖片",
+                "upload": "上傳背景圖片"
+            }
+        }
+    }
+}
+

@@ -1,0 +1,9 @@
+{
+    "ui": {
+        "titleMemberLogin": "Member Login",
+        "titleEmail": "Email",
+        "titlePassword": "Password",
+        "titleShowPassword": "Show Password",
+        "titleSubmit": "Submit"
+    }
+}

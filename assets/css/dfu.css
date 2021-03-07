@@ -1,0 +1,392 @@
+.fileinput-button {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin: auto;
+    width: 48px;
+}
+.fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    transform: translate(-300px, 0) scale(4);
+    font-size: 23px;
+    direction: ltr;
+    cursor: pointer;
+}
+
+.fullWidth {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.toolbar {
+    height: 55px;
+    width: 100%;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.detailInfo {
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+}
+
+@media all and (min-width: 700px) {
+    .sensor-dialog {
+        width: 500px;
+    }
+}
+
+@media all and (min-width: 400px) and (max-width: 500px) {
+    .sensor-dialog {
+        width: 330px;
+    }
+    .reportDiv {
+        width: 390px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media all and (min-width: 800px) {
+    .sensor-dialog {
+        width: 500px;
+    }
+    #pageContainer {
+        width: 650px;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media all and (max-width: 700px) and (max-height: 400px) and (orientation: landscape) {
+    .sensor-dialog {
+        width: 500px;
+    }
+    .reportDiv {
+        width: 100%;
+    }
+}
+
+#floorplan {
+    position: relative;
+    overflow: hidden;
+}
+
+.toolbarButton {
+    height: 50px;
+    width: 46px;
+    display: inline-block;
+    font-size: 9pt;
+    line-height: 11pt;
+    border: 1px solid;
+    overflow: hidden;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.toolbarButtonPressed {
+    background: #cfcfcf;
+}
+
+.toolbarIcon {
+    height: 38px;
+    width: 100%;
+}
+
+.toolbarButtonImage {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: 99%;
+}
+
+.toolbarText {
+    height: 12px;
+    width: 100%;
+    text-align: center;
+}
+
+.alertIcon {
+    height: 48px;
+    width: 48px;
+    position: absolute;
+    filter: grayscale(1);
+    -webkit-filter: grayscale(1);
+    -moz-filter: grayscale(1);
+    opacity: 0.5;
+}
+
+table.sensorData{
+    border-collapse: collapse;
+    border: none;
+}
+
+td.sensorData {
+    height: 30px;
+    width: 50%;
+    padding-left: 25px;
+}
+
+caption.sensorData {
+    line-height: 150%;
+}
+
+.statusCanvasDiv .statusOptionsDiv {
+    width: 100%;
+    height: 100%;
+}
+
+.tabDiv {
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.videoButton {
+    position: absolute;
+    background-color: grey;
+    opacity: 0.8;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.playButton {
+    width: 70px;
+    height: 70px;
+    left: 50%;
+    top: 50%;
+    background-image: url('/images/senior/play.png');
+    transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+}
+
+.pauseButton {
+    width: 35px;
+    height: 35px;
+    left: 5px;
+    bottom: 5px;
+    background-image: url('/images/senior/pause.png');
+}
+.videoDenied {
+    position: absolute;
+    font-size: 1.5em;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+}
+
+
+.videoDescDiv {
+    height: 42px;
+    width: 100%;
+    text-align: center;
+}
+
+.summaryGrid {
+    width: 100%;
+    height: 33%;
+    position: relative;
+}
+
+.summaryChartName {
+    position: absolute;
+    width: 130px;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    z-index: 9;
+    background-color: #E4DFDF;
+    opacity: 0.8;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.indoorLocationIcon {
+    height: 20px;
+    width: 20px;
+    background-color: cyan;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.alarmbar {
+    height: 45px;
+    width: 100%;
+    overflow-y: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+.tabbar {
+    width: 100%;
+    position: relative;
+}
+
+.alarmbarButton {
+    height: 40px;
+    width: 42px;
+    display: inline-block;
+    font-size: 9pt;
+    line-height: 11pt;
+    border: 1px solid;
+    overflow: hidden;
+    margin-left: 6px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.alarmbarIcon {
+    height: 100%;
+    width: 100%;
+}
+
+.alarmbarButtonRight{
+    position: absolute;
+    right: 5px;
+}
+
+.alarmbarButtonTop{
+    position: absolute;
+    top: 5px;
+}
+.alarmbarButtonLeft{
+    position: absolute;
+    left: 5px;
+}
+.alarmbarButtonBottom{
+    position: absolute:
+    bottom: 5px;
+}
+
+.dfuName {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    height: 40px;
+    z-index: 10;
+    font-size: 1em;
+}
+
+.animation {
+    /* webkit */
+    -webkit-animation: liveAlert;
+    -webkit-animation-play-state: running;
+    -webkit-animation-duration: 750ms;
+    -webkit-animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+    -webkit-animation-delay: 0ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-fill-mode: initial;
+
+    /* Standard */
+    animation: liveAlert;
+    animation-play-state: running;
+    animation-duration: 750ms;
+    animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+    animation-delay: 0ms;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-fill-mode: initial;
+}
+
+.alarmbarButtonImage {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: 99%;
+}
+
+@-webkit-keyframes liveAlert {
+    0% {
+        -webkit-transform: scale(1);
+    }
+    50% {
+        background: red;
+        -webkit-transform: scale(1.3);
+    }
+    100% {
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes liveAlert {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        background: red;
+        transform: scale(1.3);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+.menuButtonOnline {
+    border-color: lightblue !important;
+    background-color: lightblue !important;
+}
+
+.deleted {
+    text-decoration: line-through;
+}
+
+.historyDiv {
+    width: 100%;
+    height: 100%;
+    display: table;
+}
+
+.overlay {
+    background-color: black;
+    bottom: 0px;
+    right: 0px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    text-align: center;
+}
+
+.overlay:before {
+    content: ' ';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.overlay img {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.toolBarDetailsTitle {
+    text-align: center;
+    font-size: 1.5em;
+    line-height: 0.1;
+    font-weight: bold;
+}
+
+.alarmPeriodOptionWidth {
+    width: 24.5% !important;
+}
+
+.textAlignCenter {
+    text-align: center !important;
+}

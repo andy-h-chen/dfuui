@@ -1,0 +1,616 @@
+@font-face{
+    font-family: Nexa;
+    src: url("/fonts/nexa_light.otf") format("opentype");
+}
+@font-face{
+    font-family: Nexa;
+    font-weight: bold;
+    src: url("/fonts/nexa_bold.otf") format("opentype");
+}
+
+.control {
+    font-size: 18px;
+    position: relative;
+    display: block;
+    margin-bottom: 15px;
+    padding-left: 30px;
+    cursor: pointer;
+}
+
+.control input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+.control__indicator {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: #e6e6e6;
+}
+
+.control--radio .control__indicator {
+    border-radius: 50%;
+}
+/* Hover and focus states */
+.control:hover input ~ .control__indicator,
+.control input:focus ~ .control__indicator {
+    background: #ccc;
+}
+
+/* Checked state */
+.control input:checked ~ .control__indicator {
+    background: #2aa1c0;
+}
+
+/* Hover state whilst checked */
+.control:hover input:not([disabled]):checked ~ .control__indicator,
+.control input:checked:focus ~ .control__indicator {
+    background: #0e647d;
+}
+
+/* Disabled state */
+.control input:disabled ~ .control__indicator {
+    pointer-events: none;
+    opacity: .6;
+    background: #e6e6e6;
+}
+
+/* Check mark */
+.control__indicator:after {
+    position: absolute;
+    display: none;
+    content: '';
+}
+
+/* Show check mark */
+.control input:checked ~ .control__indicator:after {
+    display: block;
+}
+
+/* Checkbox tick */
+.control--checkbox .control__indicator:after {
+    top: 4px;
+    left: 8px;
+    width: 3px;
+    height: 8px;
+    transform: rotate(45deg);
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+}
+
+/* Disabled tick colour */
+.control--checkbox input:disabled ~ .control__indicator:after {
+    border-color: #7b7b7b;
+}
+
+/* Radio button inner circle */
+.control--radio .control__indicator:after {
+    top: 7px;
+    left: 7px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+/* Disabled circle colour */
+.control--radio input:disabled ~ .control__indicator:after {
+    background: #7b7b7b;
+}
+
+div .verticalPadding {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.vertical-center {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+body {
+    font-family: Nexa;
+    text-shadow: none;
+}
+
+.hidden {
+    display: none !important
+}
+
+.headerText {
+    font-size: 2.2em;
+    font-weight: normal;
+    color: #E06723;
+    margin-right: 60px;
+    white-space: nowrap;
+    overflow-x: scroll;
+}
+.headerLayout {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    -webkit-justify-content: center;
+    align-items: center;
+    -webkit-align-items: center;
+    height: 3.8em;
+    background-color: white !important;
+}
+
+.headerBackButton {
+    position: absolute;
+    right: 10px;
+    top: 20px;
+}
+
+#mainPage #siteListPanel {
+    width: 25em;
+}
+.settingsDiv {
+    padding: 15px;
+    position: relative;
+}
+.settingsDiv span {
+    font-size: 1.5em;
+    text-shadow: none;
+}
+.settingsDiv label span {
+    font-weight: bold;
+}
+
+.settingsBtn {
+  -webkit-border-radius: 5;
+  -moz-border-radius: 5;
+  border-radius: 5px;
+  border-top-style: none;
+  border-bottom-style: none;
+  border-left-style: none;
+  border-right-style: none;
+  box-shadow: none;
+  font-family: Nexa;
+  color: #ffffff;
+  font-size: 1.2em;
+  padding: 5px;
+  background: #007ebe;
+  text-decoration: none;
+  width: 100%;
+}
+
+.settingsBtn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+.button {
+    display: inline-block;
+    overflow: hidden;
+ }
+.buttonIcon {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: 99%;
+}
+.mainFunctionButton {
+    width: 92px;
+    height: 98px;
+}
+.mainFunctionButtonIcon {
+    height: 76px;
+}
+.mainFunctionButtonTextDiv {
+    height: 32px;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.mainFunctionButtonText {
+    background-color: #c5b9b9;
+}
+.alarmButton {
+    height: 118px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.alarmButton50 {
+    width: 50%;
+}
+.alarmButton25 {
+    width: 25%;
+}
+.alarmButtonIcon {
+    height: 96px;
+}
+.funcButton {
+    width: 33%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#footer {
+    padding-left: 20px;
+    height: 59px;
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    background-color: black;
+}
+.footBarButton {
+    height: 53px;
+    width: 25%;
+    font-size: 9pt;
+    line-height: 11pt;
+    /*margin-left: 10px;
+    margin-right: 10px;*/
+}
+.footBarButtonIcon {
+    height: 38px;
+}
+.footBarButtonText {
+    height: 13px;
+    width: 100%;
+    text-align: center;
+    font-weight: normal;
+    color: white;
+}
+
+.videoDivButton {
+    width: 40px;
+    height: 40px;
+    z-index: 10;
+    background-color:white;
+}
+
+.alarmAnimation {
+    /* webkit */
+    -webkit-animation: liveAlert;
+    -webkit-animation-play-state: running;
+    -webkit-animation-duration: 750ms;
+    -webkit-animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+    -webkit-animation-delay: 0ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-fill-mode: initial;
+
+    /* Standard */
+    animation: liveAlert;
+    animation-play-state: running;
+    animation-duration: 750ms;
+    animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+    animation-delay: 0ms;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-fill-mode: initial;
+}
+@-webkit-keyframes liveAlert {
+    0% {
+        -webkit-transform: scale(1);
+    }
+    50% {
+        background: red;
+        -webkit-transform: scale(1.3);
+    }
+    100% {
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes liveAlert {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        background: red;
+        transform: scale(1.3);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+#footButtonContainer {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+#alarmButtonContainer {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    -webkit-flex-flow: row wrap;
+}
+
+#functionButtonContainer {
+    width: 100%;
+    display: flex;
+}
+
+.fileinput-button {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin: auto;
+    width: 48px;
+}
+.fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    transform: translate(-300px, 0) scale(4);
+    font-size: 23px;
+    direction: ltr;
+    cursor: pointer;
+}
+
+#videoDlg-popup {
+    width: 90%;
+}
+#videoDlg {
+    background-color: #b8bbbb;
+    border: none;
+}
+
+
+@media all and (min-width: 700px) {
+    .popupDialog {
+        width: 550px;
+    }
+    .videoImg {
+        width: 550px;
+        height: 385px;
+    }
+}
+@media all and (min-width: 400px) and (max-width: 500px) {
+    .popupDialog {
+        width: 350px;
+    }
+    .videoImg {
+        /*width: 380px;*/
+        height: 300px;
+    }
+}
+
+@media all and (max-width: 400px) and (min-width: 350px){
+    .popupDialog {
+        width: 330px;
+    }
+    .videoImg {
+        /*width: 300px;*/
+        height: 225px;
+    }
+}
+
+@media all and (max-width: 350px) and (min-width: 300px){
+    .popupDialog {
+        width: 290px;
+    }
+    .videoImg {
+        /*width: 300px;*/
+        height: 225px;
+    }
+}
+
+
+
+@media all and (min-width: 500px) and (max-width: 700px) {
+    .popupDialog {
+        width: 500px;
+    }
+    .videoImg {
+        /*width: 450px;*/
+        height: 350px;
+    }
+}
+
+@media all and (max-width: 368px) and (min-width: 330px) {
+    .videoImg {
+        /*width: 300px;*/
+        height: 240px;
+    }
+}
+@media all and (max-width: 330px) {
+    .videoImg {
+        /*width: 300px;*/
+        height: 240px;
+    }
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.reportsCanvasDiv {
+    display: table-cell;
+}
+.reportsDiv {
+    width: 100%;
+    height: 400px;
+    display: table;
+}
+.reportsTitleDiv {
+    height: 50px;
+    text-align: center;
+    display: table-row;
+    font-size: x-large;
+}
+.settingsSaveButton {
+    position: absolute;
+    right: 3px;
+    top: 2px;
+}
+
+.settingsButtonBG {
+    background: #ddd;
+}
+
+ul.settingsNav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: grey;
+    width: 100%;
+}
+ul.settingsNav li {
+    float: left;
+    width: 50%;
+    text-align: center;
+    color: white !important;
+    text-align: center;
+    padding: 10px 0;
+    text-shadow: white 0 0 0;
+    font-weight: normal;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 2.0em;
+}
+
+.sitelist-button {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    height: 70px;
+    min-width: 40px;
+    text-align: center;
+}
+.sitelist-icon {
+    width: 100px;
+    height: 50px;
+    background-image: url("../images/mobile/sitelist01.png");
+    background-size: 45px 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.sitelist-name {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    white-space: nowrap;
+}
+#mainPage {
+    height: 100%;
+}
+
+.mainPageBgImg {
+    background-image: url('/images/mobile/bg.jpg');
+    background-size: cover;
+    background-position-x: 65%;
+}
+
+
+#siteListPanel {
+    width: 85%;
+}
+.bgImg{
+    background-image: url('/images/mobile/bg.jpg') !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-color: #8e8e8b !important;
+    background-position-x: 65% !important;
+    background-blend-mode: screen !important;
+}
+
+.userBgImg {
+    background-repeat: no-repeat !important;
+    background-size: 100% 100% !important;
+}
+
+.siteListItem {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.2em;
+    font-weight: bold;
+}
+.siteListItemSelected {
+    background-color: #007EBE;
+}
+.ui-panel-inner {
+    padding: 0 !important;
+}
+
+#commentsPageAdd {
+    height: 80px;
+    width: 80px;
+    position: fixed;
+    right: 0.3em;
+    bottom: 0.5em;
+    font-size: 8em;
+}
+
+.commentsPageButtonsDiv {
+    width: 100%;
+    display: flex;
+}
+
+.commentsPageButtonsDiv div {
+    width: 50%;
+}
+
+.commentsPageButtonsDiv img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.commentsPageFileInputDiv {
+    width: 33%;
+    text-align: center;
+}
+
+.commentsPageFileInputDiv label {
+    display: inline-block !important;
+    font-size: 25px !important;
+    color: #007ebe;
+}
+
+.fileInput {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+#audioCaptureDiv {
+    grid-area: capture;
+}
+#audioCaptureLevelDiv {
+    grid-area: capturelevel;
+}
+
+#audioPlaybackDiv {
+    grid-area: playback;
+}
+#audioPlaybackLevelDiv {
+    grid-area: playbacklevel;
+}
+#audioSpaceDiv {
+    grid-area: space;
+}
+#audioContainerDiv {
+    display: grid;
+    height: 50px;
+    padding: 5px;
+    grid-gap: 10px;
+    grid-template-areas:
+        'capture capturelevel capturelevel space playback playbacklevel playbacklevel';
+}
+#audioContainerDiv img {
+    height: 50px;
+}

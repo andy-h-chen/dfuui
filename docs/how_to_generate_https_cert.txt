@@ -1,0 +1,11 @@
+make sure the domain (login.remocare.net) is pointing to the IP of VM instance with port 443 opened.
+npm stop
+certbot certonly
+choose 1) standalone
+then input domain: login.remocare.net
+certficate will be under /etc/letsencrypt/live/login.remocare.net/
+use 3 (cert.pem, chain.pem, fullchain.pem) keys in https connection for web server
+
+add domain to exiting certificate:
+certbot certonly -d exitingdomain -d newdomain
+choose E) for expand

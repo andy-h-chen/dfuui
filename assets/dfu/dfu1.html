@@ -1,0 +1,195 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>RemoCare</title>
+<link rel="stylesheet" href="/jqm/jquery.mobile.min.css">
+<link rel="stylesheet" href="../css/dfu.css" />
+<!--link type="text/css" href="/build/skin/pink.flag/css/jplayer.pink.flag.css" rel="stylesheet" /-->
+<script src="/build/jquery.min.js"></script>
+<!--script type="text/javascript" src="/build/jquery.jplayer.min.js"></script-->
+<script src="/jqm/jquery.mobile.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../build/flot/jquery.flot.min.js"></script>
+<script src="../build/flot/jquery.flot.navigate.min.js"></script>
+<script src="../build/jquery.flot.touch.js"></script>
+
+<script src="../build/socket.io-stream.js"></script>
+
+<script src="/siofu/client.js"></script>
+<script src="./common.js"></script>
+<script src="./dfu1.js"></script>
+<script src="../build/i18next-latest.js"></script>
+<script>
+$.i18n.init({
+    ns: { namespaces: ['ns.common', 'ns.special'], defaultNs: 'ns.special'},
+    useCookie: false
+}, function(t) {
+    $('#menuButton').text($.t('ui.menuButton'));
+    $('#pleaseSelectSite').text($.t('ui.pleaseSelectSite'));
+    $('#changePasswordTitle').text($.t('ui.changePassword'));
+});
+</script>
+</head>
+
+<body>
+<div id="attachmentOverlay" class='overlay hidden'>
+    <img id='overlayPlaceholder'>
+</div>
+
+<div data-role="page" id='pageContainer'>
+	<div role="main" class="ui-content" id='mainContainer' style='padding-top:5px; padding-bottom:5px'>
+        <div data-role="popup" id="popupPhotoLandscape" class="photopopup" data-dismissible='false' data-overlay-theme="a" data-corners="false" data-tolerance="30,15">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a><img id='popupPhotoLandscapeImg' src='' alt='Photo landscape'>
+        </div>
+        <!--div data-role="popup" id="popupAudioPlayer" class="photopopup" data-overlay-theme="a" data-corners="false" data-tolerance="30,15">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+            <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
+                <div class="jp-type-single">
+                    <div class="jp-gui jp-interface">
+                        <div class="jp-volume-controls">
+                            <button class="jp-mute" role="button" tabindex="0">mute</button>
+                            <button class="jp-volume-max" role="button" tabindex="0">max volume</button>
+                            <div class="jp-volume-bar">
+                                <div class="jp-volume-bar-value"></div>
+                            </div>
+                        </div>
+                        <div class="jp-controls-holder">
+                            <div class="jp-controls">
+                                <button class="jp-play" role="button" tabindex="0">play</button>
+                                <button class="jp-stop" role="button" tabindex="0">stop</button>
+                            </div>
+                            <div class="jp-progress">
+                                <div class="jp-seek-bar">
+                                    <div class="jp-play-bar"></div>
+                                </div>
+                            </div>
+                            <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+                            <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+                            <div class="jp-toggles">
+                                <button class="jp-repeat" role="button" tabindex="0">repeat</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="jp-details">
+                        <div class="jp-title" aria-label="title">&nbsp;</div>
+                    </div>
+                    <div class="jp-no-solution">
+                        <span>Update Required</span>
+                        To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+                    </div>
+                </div>
+            </div>
+        </div-->
+        <div id="menu-anchor" style="position: absolute; left: 0px; top: 10px; width: 100%; height:20px;"></div>
+        <!--div data-role="popup" id="menu" data-position="left"-->
+        <div data-role="popup" id="menu">
+            <div data-role="listview" data-inset="true" style="min-width:150px;" id='menuButtons'>
+            </div>
+        </div>
+         <div data-role="popup" id="switchDfu" class="ui-content">
+            <h3><span id='pleaseSelectSite'>Please select site</span></h3>
+            <ul data-role="listview" data-inset=true id='dfulist'>
+            </ul>
+        </div>
+        <div data-role='popup' id='alarmDetails' class='ui-content'>
+            <h3 align='center' id='alarmDetailsTitle' ></h3>
+            <div class="alarmDetailsDesc" id='alarmDetailsDesc'></div>
+        </div>
+        <div data-role='popup' id='changePassword' class='ui-content'>
+            <h3 align='center'><span id='changePasswordTitle'>Change Password</span></h3>
+            <form action='' id='changePasswordForm'>
+            <table width='100%'>
+                <tr><td align='right'>Old Password <td><input type='password' id='changePasswordOld'></tr>
+                <tr><td align='right'>New Password <td><input type='password' id='changePasswordNew'></tr>
+                <tr><td align='right'>Repeat New Password <td><input type='password' id='changePasswordRepeat'></tr>
+                <tr><td colspan=2 align='center'>
+                    <input type="submit" data-inline="true" value="Submit" id='changePasswordSubmit'>
+                    <a href="#" data-role="button" data-inline="true" data-rel="back" data-transition="flow">Cancel</a>
+                </tr>
+            </table>
+            </form>
+            <div id='changePasswordValidationMsg' class="ui-field-contain"></div>
+        </div>
+        <div data-role='popup' id='plsLogin' class='ui-content'>
+            <a href="#" data-role="button" data-inline="true" id='plsLoginButton' data-transition="flow">Please login</a>
+        </div>
+        <div data-role='popup' id='reportDateRange' class='ui-content sensor-dialog'>
+            <h3 align='center'>Report History Range</h3>
+            <!--input type="range" name="historyRangeSlider" id="historyRangeSlider" data-highlight="true" min="-730" max="0" value="0" />
+            <div id='historyRangeResult' style='width:100%; height:30px; border:1px solid'></div-->
+            <label for='reportDateRangeStart'>Start</label><input type='date' id='reportDateRangeStart' name='reportDateRangeStart'>
+            <label for='reportDateRangeEnd'>End</label><input type='date' id='reportDateRangeEnd'  name='reportDateRangeEnd'>
+            <a href="#" data-role="button" data-inline="true" data-rel="back" data-transition="flow" id='reportDateRangeOk'>Ok</a>
+            <a href="#" data-role="button" data-inline="true" data-rel="back" data-transition="flow">Cancel</a>
+        </div>
+        <div data-role='popup' id='addReport' class='ui-content sensor-dialog' data-dismissible='false'>
+            <h3 align='center'>Add Report</h3>
+            <form action='' id='addReportSubmit'>
+              <div class="ui-field-contain">
+                <lable for='caregiverName'>Caregiver name:</label>
+                <input type='text' name='caregiverName' id='addReportName'>
+                <lable for='content'>Content:</label>
+                <textarea name='content' id='addReportContent' class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all" data-role="none"></textarea>
+              </div>
+              <div align='center'>
+                  <input type='hidden' name='operationtype' value='addreport'>
+                  <input type='hidden' name='dfuid' id='addReportDfuid'>
+                  <input type='hidden' name='fileidlist' id='addReportFileIdList'>
+             </div>
+              <div id='addReportValidationMsg'></div>
+            </form>
+            <form id='addReportUpload' enctype="multipart/form-data">
+            <div class="ui-field-contain">
+                <div style="width: 100%">
+                    <div class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all fileinput-button" data-mini="true">
+                        <span>Image</span>
+                        <input type="file" accept="image/*" capture="camera" id="addReportUploadImage" data-role="none" />
+                    </div>
+                    <div class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all fileinput-button" data-mini="true">
+                        <span>Audio</span>
+                        <input type="file" accept="audio/*" capture="microphone" id="addReportUploadAudio" data-role="none" />
+                    </div>
+
+                    <div class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all fileinput-button" data-mini="true">
+                        <span>File</span>
+                        <input type="file" id="addReportUploadFile" data-role="none" />
+                    </div>
+
+
+               </div> 
+               <div style='margin-top:10px; height:1px; width:1px; background-color:green;' id='uploadProgress'></div>
+               <table style='width:100%' id='addReportFileNameList'>
+                    <tr><td><td></tr>
+                </table>
+            </div>
+            </form>
+            <div style='width: 100%'>
+            <div style= 'margin:auto; width: 202px;'>
+                <input type="submit" data-inline="true" value="Submit" id='addReportSave'>
+                <a href="#" data-role="button" data-inline="true" data-rel="back" data-transition="flow" id='addReportCancel'>Cancel</a>
+            </div>
+            </div>
+        </div>
+
+        <div id='alarmbar' class='alarmbar'>
+            <a href="#menu" data-rel='popup' data-role="button" data-mini="true" data-theme="c" data-inline='true' data-transition="turn" data-position-to='#pageContainer' id='menuButton'></a>
+        </div>
+        <div id='tabbar' class='tabbar'>
+            <fieldset data-role='controlgroup' data-type='horizontal' data-mini='true' id='videoNavGroup'>
+                <input type='radio' name='videoNav' id='radio-choice-v1' value='summary' checked='checked'>
+                <label for='radio-choice-v1'>Summary</label>
+            </fieldset>
+            <div id='dfuName' class='dfuName'></div>
+        </div>
+        <div id='videoDivContainer' style='position: relative; padding-bottom: 5px;'>
+            <div id='floorplan' class='fullWidth'></div>
+        </div>
+        <div id='toolbar' class='toolbar'></div>
+        <div id='detailInfo' class='detailInfo fullWidth'></div>
+	</div><!-- /content -->
+
+
+</div><!-- /page -->
+</body>
+</html>

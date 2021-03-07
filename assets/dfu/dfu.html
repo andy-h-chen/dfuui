@@ -1,0 +1,461 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>RemoCare</title>
+<link rel="stylesheet" href="/jqm/jquery.mobile.min.css">
+<link rel='stylesheet' href='../css/remo.css'>
+<script src="/build/jquery.min.js"></script>
+<script>
+$(document).on('mobileinit', function() {
+    $.mobile.ignoreContentEnabled = true;
+});
+
+</script>
+<script src="/jqm/jquery.mobile.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/build/flot/jquery.flot.min.js"></script>
+<script src="/build/flot/jquery.flot.navigate.min.js"></script>
+<script src="/build/flot/jquery.flot.time.min.js"></script>
+<script src="/build/jquery.flot.touch.js"></script>
+<script src="/build/socket.io-stream.js"></script>
+<script src="/siofu/client.js"></script>
+<script src="/build/i18next.min.js" ></script>
+<script src="/build/i18next-jquery.min.js" ></script>
+<script src="/build/i18nextXHRBackend.min.js"></script>
+<script src="/build/i18nextBrowserLanguageDetector.min.js"></script>
+<script src="/build/moment.min.js"></script>
+<script src="./common.js"></script>
+<!--script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script-->
+<!--script src='./swipe.js'></script-->
+<script src='dfu.js'></script>
+
+
+</head>
+
+<body>
+<!-- Start of main page -->
+<div data-role="page" id="mainPage" class='mainPageBgImg'>
+    <div data-role='panel' id='siteListPanel' class='bgImg' data-position='right' data-display='overlay' data-swipe-close='false' data-dismissible='false'>
+        <div class='headerLayout'>
+            <span class='headerText' data-i18n='mainPage.siteListTitle'>
+                MY SITES
+            </span>
+            <img src='/images/mobile/arrow.png' id='siteListClose' class='headerBackButton'>
+        </div>
+        <div id='siteListDiv'>
+        </div>
+        <a href='#' class='ui-btn' id='siteListPanelLogout' data-i18n='mainPage.button.Logout' style='position:absolute; bottom:5px;right:5px;'></a>
+    </div>
+    <div data-role='popup' id='statusDlg'  data-dismissible='false'>
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        <h3 align='center' data-i18n='mainPage.statusDlg.title'></h3>
+        <div class='popupDialog' style=' height: 300px' id='statusCanvas'></div>
+     </div>
+    <div data-role='popup' id='audioDlg'  data-dismissible='false'>
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        <h3 align='center'>Audio Capture</h3>
+        <div class='popupDialog' style=' height: 300px' id='audioCapture'>
+            
+            <canvas id="audioVisualizer" style='width: 100%; height: 60px;'></canvas>
+            <div id="audioButtons">
+                
+                <button class='settingsBtn ui-btn-inline' data-role='none' id="audioRecord">Record</button>
+              
+                <button class='settingsBtn ui-btn-inline' data-role='none' id="audioStop">Stop</button>
+                <button class='settingsBtn ui-btn-inline' data-role='none' id="audioLive">Live</button>
+                <audio id='audioPlayback' controls src=''></audio>
+                <section id='audioClips'></section>
+            </div>
+        </div>
+     </div>
+     <div data-role='popup' id='videoDlg' class='photopopup' data-shadow='false' data-dismissible='false' data-tolerance='30, 15'>
+        <!--div  id='videoDiv' class='videoImg'-->
+            <div id='videoDivBeep' class='button videoDivButton' style='position: absolute; right: 77px; top: 5px;'><img class='buttonIcon' src='../images/senior/beep.png'></div>
+            <div id='videoDivFlash' class='button videoDivButton' style='position: absolute; right: 25px; top: 5px;'><img class='buttonIcon' src='../images/senior/flashlight-bright.png'></div>
+            <div id='videoDivPlay' style='position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; background-color: #777777; background-image: url(/images/mobile/play.png); background-repeat: no-repeat; background-size: 100% 100%;'></div>
+            <div id='videoDivPause' style='position: absolute; left: 1em; top: 1em; width: 30px; height: 30px; background-image: url(/images/mobile/pause.png); background-color: #777777; background-repeat: no-repeat; background-size: 100% 100%;'></div>
+            <h3 id='videoDenied' data-i18n='mainPage.videoDlg.videoDenied'></h3>
+            <img id='videoImg' style='width: 100%; display: block; margin: 0 auto'>
+            <div id='audioContainerDiv'>
+                <div id='audioCaptureDiv'><img id='microphone' src='/images/mobile/microphone.png'></div>
+                <div id='audioCaptureLevelDiv'><canvas id="audioCaptureVis" style='width: 100%; height: 60px;'></canvas></div>
+                <div id='audioSpaceDiv'></div>
+                <div id='audioPlaybackDiv'><img id='speaker' src='/images/mobile/speaker.png'></div>
+                <div id='audioPlaybackLevelDiv'><canvas id="audioPlaybackVis" style='width: 100%; height: 60px;'></canvas></div>
+                <audio id='audioPlaybackElm' autoplay="true" controls style='display: none;'></audio>
+            </div>
+            <div style='padding: 10px;'>
+                <button class='settingsBtn' data-role='none' data-i18n='common.buttons.ok' onclick='javascrirpt:history.go(-1);'></button></div>
+         <!--/div-->
+    </div>
+     <div data-role='popup' id='motionDlg' data-dismissible='false'>
+        <h3 align='center' data-i18n='mainPage.motionDlg.title'></h3>
+        <div class='popupDialog' style='height: 200px' id='motionCanvas'></div>
+        <div style='padding: 10px;'>
+            <button class='settingsBtn' data-role='none' data-i18n='common.buttons.ok' onclick='javascrirpt:history.go(-1);'></button></div>
+     </div>
+    <div data-role='popup' id='alarmDetails' class='ui-content'>
+        <h3 align='center' id='alarmDetailsTitle' ></h3>
+        <div class="alarmDetailsDesc" id='alarmDetailsDesc'></div>
+        <div style='padding: 10px;'>
+            <button class='settingsBtn' data-role='none' data-i18n='common.buttons.ok' onclick='javascrirpt:history.go(-1);'></button></div>
+    </div>
+    <div data-role="popup" id="switchDfu" class="ui-content">
+
+        <h3><span id='pleaseSelectSite' data-i18n='mainPage.selectSite'></span></h3>
+        <ul data-role="listview" data-inset=true id='dfulist'>
+        </ul>
+    </div>
+    <div data-role='popup' id='plsRefresh' class='ui-content'>
+        <span data-i18n='mainPage.notAvailable'></span>
+        <a href='#' data-role='button' data-mini='true' id='refreshPage' data-i18n='mainPage.refresh'></a>
+    </div>
+    <div data-role="header" id='mainPageHeader' style='height: 75px;'>
+        <image src='/images/mobile/logo.png' id='mainPageLogo' style='width: 250px; padding: 15px;'>
+        <!--a href="#siteListPanel" class="ui-btn ui-btn-inline ui-btn-right ui-btn-icon-top ui-icon-search ui-nodisc-icon sitelist-icon">Long site name</a-->
+        <div id='mainPageSiteListButton' class='sitelist-button'>
+            <div class='sitelist-icon' id='mainPageSiteListIcon'></div>
+            <div class='sitelist-name' id='mainPageSiteName'></div>
+        </div>
+    </div><!-- /header -->
+
+    <div data-role="content" >
+        <div id='alarmButtonContainer'>        
+        </div>
+        <div id='functionButtonContainer'></div>
+        <div style='height: 60px;'></div>
+    </div><!-- /content -->
+
+    <div id='footer' data-role="footer">
+        <div id='footButtonContainer'></div>
+    </div><!-- /footer -->
+</div><!-- /main page -->
+
+<!-- comments page -->
+<div data-role='page' id='commentsPage' class='bgImg'>
+    <div id='commentsPageAdd'><img src='/images/mobile/plus-with-shadow.png'></div>
+    <div data-role='header' class='headerLayout'>
+        <!--a href='#' data-rel='back' data-transition='slide' data-i18n='common.header.back'></a-->
+        <!--h2 id='commentsPageSiteName'></h2-->
+        <span class='headerText' id='commentsPageSiteName'></span>
+        <img src='/images/mobile/arrow.png' id='commentsPageBackButton' class='headerBackButton'>
+
+        <!--a href='#addReport' data-rel='popup' data-position-to='window' data-role='button' data-mini='true' data-i18n='commentsPage.addComment'></a-->
+    </div>
+    <div data-role="popup" id="popupPhotoLandscape" class='photopopup'  data-dismissible='false' data-overlay-theme="a" data-corners="false" data-tolerance="30,15">
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a><img id='popupPhotoLandscapeImg' src='' alt='Photo landscape'>
+    </div>
+     <div data-role='content'>
+        <span data-i18n='commentsPage.info'></span>
+        <hr style='width:100%; border-color:#007ebe;'>
+        <div id='commentsPageContents' style='width: 100%'></div>
+    </div>
+    <div data-role='popup' id='addReport' class='ui-content popupDialog' data-dismissible='false'>
+        <span style='font-size: 30px;' align='center' data-i18n='commentsPage.addComment'></span>
+        <form action='' id='addReportSubmit'>
+            <div class="ui-field-contain">
+            <!--lable for='caregiverName'></label-->
+            <!--span data-i18n='commentsPage.caregiverName'></span>
+            <input type='text' name='caregiverName' id='addReportName'>
+            <span data-i18n='commentsPage.content'></span-->
+             <!--lable for='content'></label-->
+            <textarea name='content' data-i18n='[placeholder]commentsPage.addYourComment' style='width: 100%; height: 8em; background-color: lightgrey;' id='addReportContent'  data-role="none"></textarea>
+            </div>
+            <div align='center'>
+                <input type='hidden' name='operationtype' value='addreport'>
+                <input type='hidden' name='dfuid' id='addReportDfuid'>
+                <input type='hidden' name='fileidlist' id='addReportFileIdList'>
+            </div>
+            <div id='addReportValidationMsg'></div>
+        </form>
+        <form id='addReportUpload' enctype="multipart/form-data" data-role='none'>
+        <div data-enhance="false" data-role="none">
+            <div style="width: 100%; display: flex;">
+                <div data-enhance='false' data-role='none' class='commentsPageFileInputDiv'>
+                    <input type="file" name='image' accept="image/*" class='fileInput' data-role='none' capture="camera" id="addReportUploadImage">
+                    <img src="/images/mobile/clip.png">
+                    <label for='addReportUploadImage' data-i18n='commentsPage.image'></label>
+                </div>
+                <div  class='commentsPageFileInputDiv'>
+                    <img src="/images/mobile/clip.png">
+                    <input type="file" accept="audio/*" capture="microphone" class='fileInput' id="addReportUploadAudio" data-role="none" />
+                    <label data-i18n='commentsPage.audio' for='addReportUploadAudio'></label>
+                </div>
+
+                <div class='commentsPageFileInputDiv'>
+                    <input type="file" id="addReportUploadFile" data-role="none" class='fileInput' />
+                    <img src="/images/mobile/clip.png">
+                    <label for='addReportUploadFile' data-i18n='commentsPage.file'></label>
+                </div>
+
+
+            </div> 
+            <div style='margin-top:10px; height:1px; width:1px; background-color:green;' id='uploadProgress'></div>
+            <table style='width:100%' id='addReportFileNameList'>
+                <tr><td><td></tr>
+            </table>
+        </div>
+        </form>
+        <div class='commentsPageButtonsDiv'>
+            <div style='width: 50%;'>
+                <img id='addReportCancel' src='/images/mobile/cancel.png'>
+            </div>
+            <div style='width: 50%;'>
+                <img id='addReportSave' src='/images/mobile/ok.png'>
+            </div>
+        </div>
+    </div>
+</div><!-- /comments page -->
+<!-- history page -->
+<div data-role='page' id='historyPage'>
+    <div data-role='header' class='headerLayout'>
+        <span class='headerText' data-i18n='historyPage.title'></span>
+        <img src='/images/mobile/arrow.png' id='historyPageBackButton' class='headerBackButton'>
+    </div>
+    <div data-role='content'>
+        <fieldset data-role='controlgroup' data-type='horizontal' data-mini='true' data-inline='false'>
+            <input type='radio' name='reportsNavBar' id='reportsNavBarLD' checked='checked'>
+            <label for='reportsNavBarLD' data-i18n='historyPage.navbar.daily'></label>
+            <input type='radio' name='reportsNavBar' id='reportsNavBarLM'>
+            <label for='reportsNavBarLM' data-i18n='historyPage.navbar.monthly'></label>
+            <!--input type='radio' name='reportsNavBar' id='reportsNavBarNW'>
+            <label for='reportsNavBarNW'>Next week</label-->
+         </fieldset> 
+    </div>
+    <div id='reportsDataUnavailable' style='position: absolute; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%);' class='hidden'>
+        Data unavailable
+    </div>
+    <div id='reportsLD' class='reportsDiv'>
+        <div class='reportsTitleDiv'>
+            <div style='display: table; width: 100%'>
+                <div id='reportsLDPrev' style='display: table-cell; background-image:url("/images/senior/arrow-left.png"); background-size: 40px 40px; background-repeat: no-repeat; /*position: absolute; left: 0px; top: 0px;*/ width: 40px; height: 40px;'></div>
+                <div id='reportsLDTitle' data-i18n='historyPage.historyOf' style='width: 80%; display: table-cell;'></div>
+                <div id='reportsLDNext' style='display: table-cell; background-image:url("/images/senior/arrow-right.png"); background-size: 40px 40px; background-repeat: no-repeat; /*position: absolute; left: 0px; top: 0px;*/ width: 40px; height: 40px;'></div>
+             </div>
+        </div>
+        <div style='display: table-row;'>
+            <div id='reportsLDCanvas' class='reportsCanvasDiv'></div>
+        </div>
+    </div>
+    <!--div id='reportsLW' class='reportsDiv'>
+        <div id='reportsLWTitle' class='reportsTitleDiv' data-i18n='historyPage.monthlyTitle'></div>
+        <div style='display: table-row;'>
+            <div id='reportsLWCanvas' class='reportsCanvasDiv'></div>
+        </div>
+    </div-->
+     <div id='reportsLM' class='reportsDiv'>
+        <div class='reportsTitleDiv'>
+            <div style='display: table; width: 100%'>
+                <div id='reportsLMPrev' style='display: table-cell; background-image:url("/images/senior/arrow-left.png"); background-size: 40px 40px; background-repeat: no-repeat; /*position: absolute; left: 0px; top: 0px;*/ width: 40px; height: 40px;'></div>
+                <div id='reportsLMTitle' data-i18n='historyPage.historyOf' style='width: 80%; display: table-cell;'></div>
+                <div id='reportsLMNext' style='display: table-cell; background-image:url("/images/senior/arrow-right.png"); background-size: 40px 40px; background-repeat: no-repeat; /*position: absolute; left: 0px; top: 0px;*/ width: 40px; height: 40px;'></div>
+             </div>
+        </div>
+        <div style='display: table-row;'>
+            <div id='reportsLMCanvas' class='reportsCanvasDiv'></div>
+        </div>
+    </div>
+    <!--div id='reportsNW' class='reportsDiv'>
+        <div id='reportsLDTitle' class='reportsTitleDiv'>Prediction of next week</div>
+        <div style='display: table-row;'>
+            <div id='reportsNWCanvas' class='reportsCanvasDiv'></div>
+        </div>
+    </div-->
+    <div id='reportsLegend'></div>
+</div><!-- /history page -->
+<!-- settings page -->
+<div data-role='page' id='settingsPage'>
+    <div data-role='popup' id='timepicker' class='ui-content popupDialog' data-dismissible='false'>
+        <span id='settingsTimepickerTitle'></span>
+        <input type='time' id='settingsTime'>
+        <a href="#" data-role="button" data-inline="true" data-mini='true' data-rel="back" data-transition="flow" id='settingsTimepickerOK' data-i18n='common.buttons.ok'></a>
+        <a href="#" data-role="button" data-inline="true" data-mini='true' data-rel="back" data-transition="flow" id='settingsTimepickerCancel' data-i18n='common.buttons.cancel'></a>
+    </div>
+    <div data-role='header' class='headerLayout'>
+        <span class='headerText' data-i18n='settingsPage.title'></span>
+        <img src='/images/mobile/arrow.png' id='settingsPageBackButton' class='headerBackButton'>
+    </div>
+    <div data-role='content' style='padding: 0;'>
+        <ul class='settingsNav'>
+            <li tab-div='settingsGAO' data-i18n='settingsPage.navbar.motion'></li>
+            <li tab-div='settingsWAS' data-i18n='settingsPage.navbar.wander'></li>
+            <li tab-div='settingsFD' data-i18n='settingsPage.navbar.fall'></li>
+            <li tab-div='settingsCP'  data-i18n='settingsPage.navbar.general'></li>
+        </ul>
+        <div data-role="swipePage" id='settingsGAO' class='settingsDiv bgImg'>
+            <div><button id='settingsGAOSave' class='settingsBtn' data-role='none' data-i18n='common.header.save'></button></div>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.sendAlarmEmail'></span>
+                    <input type="checkbox" id='settingsGAOalarmEmail' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <span data-i18n='settingsPage.motion.alarmPeriod'></span>
+            <div style='display: flex; -webkit-flex-flow: row wrap;' class='verticalPadding'>
+                <div style='display: inline-block; width: 50%;'>
+                    <label class="control control--radio"><span  data-i18n='settingsPage.motion.realtime'></span>
+                        <input type="radio" name='settingsGAOAlarmPeriod' id='settingsGAOAlarmPeriod1' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                </div>
+                <div style='display: inline-block;; width: 50%;'>
+                    <label class="control control--radio"><span  data-i18n='settingsPage.motion.day'></span>
+                        <input type="radio" name='settingsGAOAlarmPeriod' id='settingsGAOAlarmPeriod2' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                 </div>
+                <div style='display: inline-block;; width: 50%;'>
+                    <label class="control control--radio"><span  data-i18n='settingsPage.motion.week'></span>
+                        <input type="radio" name='settingsGAOAlarmPeriod' id='settingsGAOAlarmPeriod3' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                 </div>
+                <div style='display: inline-block;; width: 50%;'>
+                    <label class="control control--radio"><span  data-i18n='settingsPage.motion.month'></span>
+                        <input type="radio" name='settingsGAOAlarmPeriod' id='settingsGAOAlarmPeriod4' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                 </div>
+             </div>
+             <span data-i18n='settingsPage.motion.area'></span>
+             <div style='display: flex; -webkit-flex-flow: row wrap;' class='verticalPadding'>
+                <div style='display: inline-block;; width: 30%;'>
+                    <label class="control control--checkbox">
+                        <span data-i18n='settingsPage.motion.red'></span>
+                        <input type="checkbox" id='alarmOptionRed' name='alarmOption' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                </div>
+                <div style='display: inline-block;; width: 38%;'>
+                    <label class="control control--checkbox">
+                        <span data-i18n='settingsPage.motion.yellow'></span>
+                        <input type="checkbox" id='alarmOptionYellow' name='alarmOption' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                </div>
+                <div style='display: inline-block;; width: 32%;'>
+                    <label class="control control--checkbox">
+                        <span data-i18n='settingsPage.motion.green'></span>
+                        <input type="checkbox" id='alarmOptionGreen' name='alarmOption' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                </div>
+            </div>
+            <!--div style='display: table; width: 100%'>
+                <div id='settingsGAOAlarmPeriodDiv' style='padding: 5px; display: table-cell; width: 50%;'>
+            <span data-i18n='settingsPage.motion.alarmPeriod'></span>
+            <fieldset data-role='controlgroup' data-type='vertical' data-mini='true' data-line='false'>
+                <input type='radio' name='settingsGAOAlarmPeriod' id='settingsGAOAlarmPeriod1'>
+                <label for='settingsGAOAlarmPeriod1' data-i18n='settingsPage.motion.realtime'></label>
+                <input type='radio' name='settingsGAOAlarmPeriod' id='settingsGAOAlarmPeriod2'>
+                <label for='settingsGAOAlarmPeriod2' data-i18n='settingsPage.motion.day'></label>
+                <input type='radio' name='settingsGAOAlarmPeriod' id='settingsGAOAlarmPeriod3'>
+                <label for='settingsGAOAlarmPeriod3' data-i18n='settingsPage.motion.week'></label>
+                <input type='radio' name='settingsGAOAlarmPeriod' id='settingsGAOAlarmPeriod4'>
+                <label for='settingsGAOAlarmPeriod4' data-i18n='settingsPage.motion.month'></label>
+            </fieldset>
+                </div>
+                <div style='padding: 5px; display: table-cell; width: 50%;'>
+            <span data-i18n='settingsPage.motion.area'></span>
+            <fieldset id="alarmOptionsContainer" data-role="controlgroup" data-mini="true" data-line="false">
+                <input type="checkbox" name="alarmOption" id="alarmOptionRed" checked><label class="textAlignCenter" for="alarmOptionRed" data-i18n='settingsPage.motion.red'></label>
+                <input type="checkbox" name="alarmOption" id="alarmOptionYellow"><label class="textAlignCenter" for="alarmOptionYellow" data-i18n='settingsPage.motion.yellow'></label>
+                <input type="checkbox" name="alarmOption" id="alarmOptionGreen"><label class="textAlignCenter" for="alarmOptionGreen" data-i18n='settingsPage.motion.green'></label>
+            </fieldset>
+ 
+                </div>
+            </div-->
+            <span data-i18n='settingsPage.motion.monitoringPeriod'></span>
+            <div data-role="rangeslider" data-mini="true" id='settingsGAOMP'>
+                <!--label for="range-4a">Rangeslider:</label-->
+                <input type="range" name="range-4a" id="settingsGAOMPStart" min="0" max="24" value='0'>
+                <!--label for="range-4b">Rangeslider:</label-->
+                <input type="range" name="range-4b" id="settingsGAOMPEnd" min="0" max="24" value='24'>
+            </div>
+            <span data-i18n='settingsPage.motion.thresholds'></span>
+            <div id="settingsGAOChartSweepView" style="width: calc(100%-40px); height:160px; padding-left: 20px; padding-right: 20px"></div>
+        </div>
+        <div  id='settingsWAS' class='settingsDiv bgImg'>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.sendAlarmEmail'></span>
+                    <input type="checkbox" id='settingsWASalarmEmail' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.wander.detection'></span>
+                    <input type="checkbox" id='settingsWASEn' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.wander.doorFinding'></span>
+                    <input type="checkbox" id='settingsWASDFen' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <span data-i18n='settingsPage.wander.sensitivity'></span>
+            <input type="range" name="settingsWASSensitivity" id="settingsWASSensitivity" min="0" max="6">
+            <span data-i18n='settingsPage.wander.position'></span>
+            <div id='settingsWASDf' style='width: 100%; height: 200px; border: solid 1px'></div>
+            <div style='padding: 10px;'>
+                <button id='settingsWASSave' class='settingsBtn' data-role='none' data-i18n='common.header.save'></button></div>
+        </div>
+        <div data-role="swipePage" id='settingsFD' class='settingsDiv bgImg'>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.sendAlarmEmail'></span>
+                    <input type="checkbox" id='settingsFDalarmEmail' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.fall.detection'></span>
+                    <input type="checkbox" id='settingsFDEn' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.fall.falseAlarmLearning'></span>
+                    <input type="checkbox" id='settingsFDFAL' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <span data-i18n='settingsPage.fall.sensitivity'></span>
+            <input type="range" name="settingsFDSensitivity" id="settingsFDSensitivity" min="0" max="6">
+            <div style='padding: 10px;'>
+                <button id='settingsFDSave' class='settingsBtn' data-role='none' data-i18n='common.header.save'></button></div>
+        </div>
+        <div data-role="swipePage" id='settingsCP' class='settingsDiv bgImg'>
+            <h4 align='center'><span id='changePasswordTitle' data-i18n='settingsPage.general.password.title'></span></h4>
+
+            <form action='' id='changePasswordForm'>
+                <input type='password' id='changePasswordOld' data-i18n='[placeholder]settingsPage.general.password.oldPassword'>
+                <input type='password' id='changePasswordNew'  data-i18n='[placeholder]settingsPage.general.password.newPassword'>
+                <input type='password' id='changePasswordRepeat' data-i18n='[placeholder]settingsPage.general.password.repeatNewPassword'>
+                <div style='padding: 10px;'>
+                    <button id='changePasswordSubmit' type='submit' class='settingsBtn' data-role='none' data-i18n='common.buttons.submit'></button></div>
+                <div style='padding: 10px;'>
+                    <button id='changePasswordCancel' type='reset'  class='settingsBtn' data-role='none' data-i18n='common.buttons.cancel'></button></div>
+            </form>
+            <div id='changePasswordValidationMsg' class="ui-field-contain"></div>
+            <h4 align='center'><span id='changeBackground' data-i18n='settingsPage.general.background.title'></span></h4>
+            <div data-enhance='false' data-role='none' class='settingsBtn' style='display: flex; align-items: center; justify-content: center;'>
+                <input type="file" name='image' accept="image/*" class='fileInput' data-role='none' id="settingsUploadBg">
+                <img src="/images/mobile/clip.png">
+                <label for='settingsUploadBg' data-i18n='settingsPage.general.background.upload' style='text-shadown: none; padding-left: 10px;'></label>
+            </div>
+            <div style="margin-top:10px; height:1px; width:1px; background-color:green;" id="settingsUploadBgProgress"></div>
+
+        </div>
+    </div>
+</div><!-- /settings page -->
+</body>
+
+</html>

@@ -1,0 +1,437 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>RemoCare</title>
+<link rel="stylesheet" href="/jqm/jquery.mobile.min.css">
+<link rel='stylesheet' href='../css/bruyere.css'>
+<script src="/build/jquery.min.js"></script>
+<script src="/jqm/jquery.mobile.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/build/socket.io-stream.js"></script>
+<script src="/build/flot/jquery.flot.min.js"></script>
+<script src="/build/flot/jquery.flot.navigate.min.js"></script>
+<script src="/build/flot/jquery.flot.time.min.js"></script>
+<script src="/build/i18next.min.js" ></script>
+<script src="/build/i18next-jquery.min.js" ></script>
+<script src="/build/i18nextXHRBackend.min.js"></script>
+<script src="/build/i18nextBrowserLanguageDetector.min.js"></script>
+<script src="./bruyere.js"></script>
+</head>
+
+<body>
+<!-- Start of main page -->
+<div data-role="page" id="mainPage" class='mainPageBg'>
+    <div data-role="header" id='mainPageHeader' style='height: 35px; padding: 10px; background-color: black;'>
+	    <div id='mainPageMenuButton' style='float: right; width: 30px; height: 100%;'>
+            <div style='background-image: url("/images/bruyere/Icons_Dots-72.png");background-repeat: no-repeat;background-size: auto 70%;background-position: center;height: 100%;'></div>
+        </div>
+		<div style='width: auto;height: 100%;display: grid;grid-template-columns: 50% 50%;'>
+			<div style='height: 100%;background-image: url("/images/bruyere/Icons_Logo.png");background-size: 90%;background-position-x: left;background-position-y: center;background-size: auto 90%;background-repeat: no-repeat;'></div>
+			
+			<div style='height: 100%;background-image: url("/images/bruyere/bruyere_logo.png");background-position-x: right;background-position-y: center;background-size: auto 90%;background-repeat: no-repeat;'></div>
+			
+		</div>
+
+    </div><!-- /header -->
+    <div data-role="content" >
+        <div id='alarmButtonContainer'>        
+        </div>
+    </div><!-- /content -->
+	<div data-role="panel" id='mainPageMenuPanel' class="jqm-navmenu-panel" data-position="right" data-display="overlay" data-theme="a">
+	    <ul id='mainPageMenu' style='list-style: none;'>
+			<!--<li><a href="#" id='adminSignin'>Admin Sign In</a></li>
+			<li><a href="#" id='addNewResident'>Add Resident</a></li>-->
+			<li><a href="#" data-ajax="false" id='signOut'>Sign out</a></li>
+		</ul>
+	</div>
+</div>
+<!-- profile page -->
+<div data-role='page' id='profilePage'>
+	<div data-role="header" id='profilePageHeader' class='header'>
+		<img src='/images/bruyere/Icons_Back.png' id='profilesPageBackButton' class='headerBackButton'>
+		<div id='profilesHeaderTitle' class='headerTitle'>Resident Profile</div>
+		<!--div style='width:30px; height:100%;float:right;'></div-->
+	</div>
+	<div data-role='content' style='width:100%; padding:0'>
+		<div id='profileDetails' style='display:grid;grid-gap:15px;grid-template-columns: 50% 50%;padding:1em; border-bottom: 2px solid #c54444'>
+			<div id='profilePhotoDiv' style='grid-column: 1; grid-row:1/4; position: relative;'>
+				<img src='' id='profilePhoto' style='height:200px; max-width:100%;'>
+				<div id='profilePhotoEdit' style='position:absolute; left:0; top:0; display: none;'>
+					<img src='/images/bruyere/Icons_Edit-whiteBG.png' style='width: 30px;'>
+					<input id='profilePhotoUpload' type='file' data-role='none' hidden/>
+					<input id='profileId' type='hidden'>
+				</div>
+			</div>
+			<div id='profileName' style='grid-column: 2; grid-row:1; font-size:1.8em;font-weight:bold; position:relative'>
+				<span></span>
+				<div id='profileNameEdit' style='position:absolute; right:35; top:0; display: none;'>
+					<img src='/images/bruyere/Icons_Edit.png' style='width: 30px;'>
+				</div>
+			</div>
+			<div id='profileRoom' style='grid-column: 2; grid-row:2;font-size:1.8em; position: relative;'>
+				<span></span>
+				<div id='profileRoomEdit' style='position:absolute; right:35; top:0; display: none;'>
+					<img src='/images/bruyere/Icons_Edit.png' style='width: 30px;'>
+				</div>
+			</div>
+			<div id='profileAdmin' style='grid-column: 2; grid-row:3'>
+				<div id='adminButton' class='generalBg' >
+					<span  style='vertical-align: middle;display: table-cell;height:35px;'><img src='/images/bruyere/Icons_Admin.png' style='vertical-align:middle;height:85%;'></span>
+					<span style='vertical-align: middle;display: table-cell;'>Admin</span>
+				</div>
+			</div>
+		</div>
+		<div id='profileFuncDiv' style='display: flex; padding: 5px;'>
+			<div id='profileVideo'>
+				<img src='/images/bruyere/video-normal.png'>
+			</div>
+			<div id='profileMotion'>
+				<img src='/images/bruyere/mobility-normal.png'>
+			</div>
+			<div id='profileHistory'>
+				<img src='/images/bruyere/history-normal.png'>
+			</div>
+			<div id='profileSettings'>
+				<img src='/images/bruyere/settings-action.png'>
+			</div>
+		</div>
+		<div id='profilePhotoUploadBar' style='width: 0; height:3px; background-color: green; margin-top: 8px;'></div>
+		<div id='alarmHistory'>
+			<div id='alarmHistoryTitle' style='background-color:#c54444;text-align: center;color: white;font-size: 1.5em;'>Alarm History</div>
+			<div id='alarmHistoryContent' style='background-image: url("/images/bruyere/alarm_background.png");'>
+			</div>
+		</div>
+	</div>
+</div><!-- /profile-->
+<!-- video page -->
+<div data-role='page' id='videoPage'>
+	<div data-role="header" id='videoPageHeader' class='header'>
+		<img src='/images/bruyere/Icons_Back.png' id='profilesPageBackButton' class='headerBackButton'>
+		<div id='videoHeaderTitle' class='headerTitle'>Resident Video</div>
+		<!--div style='width:30px; height:100%;float:right;'></div-->
+	</div>
+	<div data-role='content' style='width:100%; padding:0'>
+		<div id='videoContainer' style='width: 100%; max-width: 600px; min-height: 300px; position: relative;'>
+			<div id='videoDivBeep' class='button videoDivButton' style='position: absolute; right: 77px; top: 5px;'><img class='buttonIcon' src='../images/senior/beep.png'></div>
+			<div id='videoDivFlash' class='button videoDivButton' style='position: absolute; right: 25px; top: 5px;'><img class='buttonIcon' src='../images/senior/flashlight-bright.png'></div>
+			<div id='videoDivPlay' style='position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; background-color: #777777; background-image: url(/images/mobile/play.png); background-repeat: no-repeat; background-size: 100% 100%;'></div>
+			<div id='videoDivPause' style='position: absolute; left: 1em; bottom: 4em; width: 30px; height: 30px; background-image: url(/images/mobile/pause.png); background-color: #777777; background-repeat: no-repeat; background-size: 100% 100%;'></div>
+			<h3 id='videoDenied' data-i18n='mainPage.videoDlg.videoDenied' style='poistion: absolute;' class='h-center v-center'>Video is denied!</h3>
+			<img id='videoImg' style='width: 100%; max-width: 600px; display: block; margin: 0 auto'>
+		</div>
+	</div>
+</div><!-- /video-->
+
+<!-- motion page -->
+<div data-role='page' id='motionPage'>
+	<div data-role="header" id='motionPageHeader' class='header'>
+		<img src='/images/bruyere/Icons_Back.png' id='motionPageBackButton' class='headerBackButton'>
+		<div id='motionHeaderTitle' class='headerTitle'>Resident Motion</div>
+		<!--div style='width:30px; height:100%;float:right;'></div-->
+	</div>
+	<div data-role='content' style='width:100%; padding:0'>
+		<div id='motionContainer' style='width: 100%; height: 300px; position: relative;'>
+			<div style='width: 100%; height: 200px' id='motionCanvas'></div>
+		</div>
+	</div>
+</div><!-- /motion-->
+<!-- history page -->
+<div data-role='page' id='historyPage'>
+	<div data-role="header" id='historyPageHeader' class='header'>
+		<img src='/images/bruyere/Icons_Back.png' id='historyPageBackButton' class='headerBackButton'>
+		<div id='historyHeaderTitle' class='headerTitle'>Resident History</div>
+		<!--div style='width:30px; height:100%;float:right;'></div-->
+	</div>
+	<div data-role='content' style='width:100%; padding:0'>
+        <fieldset data-role='controlgroup' data-type='horizontal' data-mini='true' data-inline='false'>
+            <input type='radio' name='historyNavBar' id='historyNavBarLD' checked='checked'>
+            <label for='historyNavBarLD' data-i18n='historyPage.navbar.daily'></label>
+            <input type='radio' name='historyNavBar' id='historyNavBarLM'>
+            <label for='historyNavBarLM' data-i18n='historyPage.navbar.monthly'></label>
+            <!--input type='radio' name='reportsNavBar' id='reportsNavBarNW'>
+            <label for='reportsNavBarNW'>Next week</label-->
+        </fieldset>
+		<div id='historyDataUnavailable' style='position: absolute; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%);' class='hidden'>
+			Data unavailable
+		</div>
+		<div id='reportsLD' class='reportsDiv'>
+			<div class='reportsTitleDiv'>
+				<div style='display: table; width: 100%'>
+					<div id='reportsLDPrev' style='display: table-cell; background-image:url("/images/senior/arrow-left.png"); background-size: 40px 40px; background-repeat: no-repeat; /*position: absolute; left: 0px; top: 0px;*/ width: 40px; height: 40px;'></div>
+					<div id='reportsLDTitle' data-i18n='historyPage.historyOf' style='width: 80%; display: table-cell;'></div>
+					<div id='reportsLDNext' style='display: table-cell; background-image:url("/images/senior/arrow-right.png"); background-size: 40px 40px; background-repeat: no-repeat; /*position: absolute; left: 0px; top: 0px;*/ width: 40px; height: 40px;'></div>
+				 </div>
+			</div>
+			<div style='display: table-row;'>
+				<div id='reportsLDCanvas' class='reportsCanvasDiv'></div>
+			</div>
+		</div>
+		<div id='reportsLM' class='reportsDiv'>
+			<div class='reportsTitleDiv'>
+				<div style='display: table; width: 100%'>
+					<div id='reportsLMPrev' style='display: table-cell; background-image:url("/images/senior/arrow-left.png"); background-size: 40px 40px; background-repeat: no-repeat; /*position: absolute; left: 0px; top: 0px;*/ width: 40px; height: 40px;'></div>
+					<div id='reportsLMTitle' data-i18n='historyPage.historyOf' style='width: 80%; display: table-cell;'></div>
+					<div id='reportsLMNext' style='display: table-cell; background-image:url("/images/senior/arrow-right.png"); background-size: 40px 40px; background-repeat: no-repeat; /*position: absolute; left: 0px; top: 0px;*/ width: 40px; height: 40px;'></div>
+				 </div>
+			</div>
+			<div style='display: table-row;'>
+				<div id='reportsLMCanvas' class='reportsCanvasDiv'></div>
+			</div>
+		</div>
+	</div>
+</div><!-- /history-->
+<!-- settings page -->
+<div data-role='page' id='settingsPage'>
+    <div data-role='popup' id='timepicker' class='ui-content popupDialog' data-dismissible='false'>
+        <span id='settingsTimepickerTitle'></span>
+        <input type='time' id='settingsTime'>
+        <a href="#" data-role="button" data-inline="true" data-mini='true' data-rel="back" data-transition="flow" id='settingsTimepickerOK' data-i18n='common.buttons.ok'></a>
+        <a href="#" data-role="button" data-inline="true" data-mini='true' data-rel="back" data-transition="flow" id='settingsTimepickerCancel' data-i18n='common.buttons.cancel'></a>
+    </div>
+	<div data-role="header" id='historyPageHeader' class='header'>
+		<img src='/images/bruyere/Icons_Back.png' id='settingsPageBackButton' class='headerBackButton'>
+		<div id='historyHeaderTitle' class='headerTitle'>Settings</div>
+		<!--div style='width:30px; height:100%;float:right;'></div-->
+	</div>
+    <div data-role='content' style='padding: 0;'>
+        <ul class='settingsNav'>
+            <li tab-div='settingsGAO' data-i18n='settingsPage.navbar.motion'></li>
+            <li tab-div='settingsWAS' data-i18n='settingsPage.navbar.wander'></li>
+            <li tab-div='settingsFD' data-i18n='settingsPage.navbar.fall'></li>
+            <li tab-div='settingsCP'  data-i18n='settingsPage.navbar.general'></li>
+        </ul>
+        <div  id='settingsGAO' class='settingsDiv bgImg'>
+            <div><button id='settingsGAOSave' class='settingsBtn' data-role='none' data-i18n='common.header.save'></button></div>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.sendAlarmEmail'></span>
+                    <input type="checkbox" id='settingsGAOalarmEmail' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <span data-i18n='settingsPage.motion.alarmPeriod'></span>
+            <div style='display: flex; -webkit-flex-flow: row wrap;' class='verticalPadding'>
+                <div style='display: inline-block; width: 50%;'>
+                    <label class="control control--radio"><span  data-i18n='settingsPage.motion.realtime'></span>
+                        <input type="radio" name='settingsGAOAlarmPeriod' id='settingsGAOAlarmPeriod1' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                </div>
+                <div style='display: inline-block;; width: 50%;'>
+                    <label class="control control--radio"><span  data-i18n='settingsPage.motion.day'></span>
+                        <input type="radio" name='settingsGAOAlarmPeriod' id='settingsGAOAlarmPeriod2' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                 </div>
+                <div style='display: inline-block;; width: 50%;'>
+                    <label class="control control--radio"><span  data-i18n='settingsPage.motion.week'></span>
+                        <input type="radio" name='settingsGAOAlarmPeriod' id='settingsGAOAlarmPeriod3' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                 </div>
+                <div style='display: inline-block;; width: 50%;'>
+                    <label class="control control--radio"><span  data-i18n='settingsPage.motion.month'></span>
+                        <input type="radio" name='settingsGAOAlarmPeriod' id='settingsGAOAlarmPeriod4' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                 </div>
+             </div>
+             <span data-i18n='settingsPage.motion.area'></span>
+             <div style='display: flex; -webkit-flex-flow: row wrap;' class='verticalPadding'>
+                <div style='display: inline-block;; width: 30%;'>
+                    <label class="control control--checkbox">
+                        <span data-i18n='settingsPage.motion.red'></span>
+                        <input type="checkbox" id='alarmOptionRed' name='alarmOption' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                </div>
+                <div style='display: inline-block;; width: 38%;'>
+                    <label class="control control--checkbox">
+                        <span data-i18n='settingsPage.motion.yellow'></span>
+                        <input type="checkbox" id='alarmOptionYellow' name='alarmOption' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                </div>
+                <div style='display: inline-block;; width: 32%;'>
+                    <label class="control control--checkbox">
+                        <span data-i18n='settingsPage.motion.green'></span>
+                        <input type="checkbox" id='alarmOptionGreen' name='alarmOption' data-role='none'/>
+                        <div class="control__indicator"></div>
+                    </label>
+                </div>
+            </div>
+            <span data-i18n='settingsPage.motion.monitoringPeriod'></span>
+            <div data-role="rangeslider" data-mini="true" id='settingsGAOMP'>
+                <!--label for="range-4a">Rangeslider:</label-->
+                <input type="range" name="range-4a" id="settingsGAOMPStart" min="0" max="24" value='0'>
+                <!--label for="range-4b">Rangeslider:</label-->
+                <input type="range" name="range-4b" id="settingsGAOMPEnd" min="0" max="24" value='24'>
+            </div>
+            <span data-i18n='settingsPage.motion.thresholds'></span>
+            <div id="settingsGAOChartSweepView" style="width: calc(100%-40px); height:160px; padding-left: 20px; padding-right: 20px"></div>
+        </div>
+        <div  id='settingsWAS' class='settingsDiv bgImg'>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.sendAlarmEmail'></span>
+                    <input type="checkbox" id='settingsWASalarmEmail' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.wander.detection'></span>
+                    <input type="checkbox" id='settingsWASEn' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.wander.doorFinding'></span>
+                    <input type="checkbox" id='settingsWASDFen' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <span data-i18n='settingsPage.wander.sensitivity'></span>
+            <input type="range" name="settingsWASSensitivity" id="settingsWASSensitivity" min="0" max="6">
+            <span data-i18n='settingsPage.wander.position'></span>
+            <div id='settingsWASDf' style='width: 100%; height: 200px; border: solid 1px'></div>
+            <div style='padding: 10px;'>
+                <button id='settingsWASSave' class='settingsBtn' data-role='none' data-i18n='common.header.save'></button></div>
+        </div>
+        <div id='settingsFD' class='settingsDiv bgImg'>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.sendAlarmEmail'></span>
+                    <input type="checkbox" id='settingsFDalarmEmail' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.fall.detection'></span>
+                    <input type="checkbox" id='settingsFDEn' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <div class='verticalPadding'>
+                <label class="control control--checkbox">
+                    <span data-i18n='settingsPage.fall.falseAlarmLearning'></span>
+                    <input type="checkbox" id='settingsFDFAL' data-role='none'/>
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <span data-i18n='settingsPage.fall.sensitivity'></span>
+            <input type="range" name="settingsFDSensitivity" id="settingsFDSensitivity" min="0" max="6">
+            <div style='padding: 10px;'>
+                <button id='settingsFDSave' class='settingsBtn' data-role='none' data-i18n='common.header.save'></button></div>
+        </div>
+        <div id='settingsCP' class='settingsDiv bgImg'>
+            <h4 align='center'><span id='changePasswordTitle' data-i18n='settingsPage.general.password.title'></span></h4>
+
+            <form action='' id='changePasswordForm'>
+                <input type='password' id='changePasswordOld' data-i18n='[placeholder]settingsPage.general.password.oldPassword'>
+                <input type='password' id='changePasswordNew'  data-i18n='[placeholder]settingsPage.general.password.newPassword'>
+                <input type='password' id='changePasswordRepeat' data-i18n='[placeholder]settingsPage.general.password.repeatNewPassword'>
+                <div style='padding: 10px;'>
+                    <button id='changePasswordSubmit' type='submit' class='settingsBtn' data-role='none' data-i18n='common.buttons.submit'></button></div>
+                <div style='padding: 10px;'>
+                    <button id='changePasswordCancel' type='reset'  class='settingsBtn' data-role='none' data-i18n='common.buttons.cancel'></button></div>
+            </form>
+            <div id='changePasswordValidationMsg' class="ui-field-contain"></div>
+        </div>
+    </div>
+</div><!-- /settings page -->
+<!-- admin password page -->
+<div data-role='page' id='adminPasswordPage'>
+	<div data-role="header" id='profilePageHeader' class='header'>
+		<img src='/images/bruyere/Icons_Back.png' id='adminPasswordPageBackButton' class='headerBackButton'>
+		<div id='adminPasswordHeaderTitle' class='headerTitle'>Password</div>
+		<div style='width:30px; height:100%;float:right;'></div>
+	</div>
+	<div data-role='content' style='width:100%; padding:0'>
+		<div style='width:90%; max-width: 500px; margin: 0 auto;'>
+			<form action='' id='adminPasswordForm'>
+			<input type='password' id='adminPasswordInput' placeholder='Enter your password' style='background: url(/images/bruyere/Icons_Password.png) no-repeat scroll 10px; background-size: auto 90%; padding-left:30px; text-indent: 20px;'>
+			<div style='padding: 10px;  max-width: 300px; margin: 0 auto;'>
+				<button id='adminPasswordSubmit' type='submit' class='generalBg generalBtn' data-role='none'>Submit</button></div>
+			<div style='padding: 10px; max-width: 300px; margin: 0 auto;'>
+				<button id='adminPasswordCancel' type='reset'  class='generalBg generalBtn' data-role='none'>Cancel</button></div>
+			</form>
+		</div>
+	</div>
+</div> <!-- /admin password page-->
+
+<!-- name/room edit page -->
+<div data-role='page' id='nameEditPage'>
+	<div data-role="header" id='profilePageHeader' class='header'>
+		<img src='/images/bruyere/Icons_Back.png' id='nameEditPageBackButton' class='headerBackButton'>
+		<div id='nameEditHeaderTitle' class='headerTitle'></div>
+		<div style='width:30px; height:100%;float:right;'></div>
+	</div>
+	<div data-role='content' style='width:100%; padding:0'>
+		<div style='width:90%; max-width: 500px; margin: 0 auto;'>
+			<form action='' id='nameEditForm'>
+			<input type='text' id='nameEditInput' style='padding-left:30px; text-indent: 20px;'>
+			<input type='hidden' id='nameEditId'>
+			<input type='hidden' id='nameEditType'>
+			<div style='padding: 10px;  max-width: 300px; margin: 0 auto;'>
+				<button id='nameEditSubmit' type='submit' class='generalBg generalBtn' data-role='none'>Submit</button></div>
+			<div style='padding: 10px; max-width: 300px; margin: 0 auto;'>
+				<button id='nameEditCancel' type='reset'  class='generalBg generalBtn' data-role='none'>Cancel</button></div>
+			</form>
+		</div>
+	</div>
+</div> <!-- /name/room edit page-->
+
+<!-- add new resident page -->
+<div data-role='page' id='newResidentPage'>
+	<div data-role="header" id='newResidentPageHeader' class='header'>
+		<img src='/images/bruyere/Icons_Back.png' id='newResidentPageBackButton' class='headerBackButton'>
+		<div id='newResidentPageHeaderTitle' class='headerTitle'>New Resident</div>
+		<div style='width:30px; height:100%;float:right;'></div>
+	</div>
+	<div data-role='content' style='width:100%; padding:0'>
+		<div style='width:90%; max-width: 500px; margin: 0 auto;'>
+			<img src='/images/bruyere/Icons_Photo.png' id='newResidentPhoto' style='height:200px; max-width:100%;'>
+			<div id='newResidentUploadBar' style='width: 0; height:1px; background-color: green; margin-top: 10px;'></div>
+			<div id='newResidentErr' style='width: 100%;margin-top: 10px;'></div>
+			<form action='' id='newResidentForm'>
+			<input id='newResidentFile' type='file' data-role='none' hidden/>
+			<input type='hidden' id='newResidentPhotoFile'>
+			<input type='text' id='newResidentName' placeholder='Enter resident name' style='text-indent: 20px;'>
+			<input type='text' id='newResidentRoom' placeholder='Enter resident room' style='text-indent: 20px;'>
+			<input type='text' id='newResidentDfu' placeholder='Enter resident camera id' style='text-indent: 20px;'>
+			<div style='padding: 10px;  max-width: 300px; margin: 0 auto;'>
+				<button id='newResidentUploadPic' type='button' class='generalBg generalBtn' data-role='none'>Upload Photo</button></div>
+			<div style='padding: 10px;  max-width: 300px; margin: 0 auto;'>
+				<button id='newResidentSubmit' type='submit' class='generalBg generalBtn' data-role='none'>Submit</button></div>
+			<div style='padding: 10px; max-width: 300px; margin: 0 auto;'>
+				<button id='newResidentCancel' type='reset'  class='generalBg generalBtn' data-role='none'>Cancel</button></div>
+			</form>
+		</div>
+	</div>
+</div> <!-- add new resident page-->
+
+<!-- alarm info page -->
+<div data-role='page' id='alarmInfoPage'>
+	<div data-role="header" id='alarmInfoPageHeader' class='header'>
+		<img src='/images/bruyere/Icons_Back.png' id='alarmInfoPageBackButton' class='headerBackButton'>
+		<div id='alarmInfoHeaderTitle' class='headerTitle'>Alarm Information</div>
+		<div style='width:30px; height:100%;float:right;'></div>
+	</div>
+	<div data-role='content' style='width:100%; padding:0'>
+		<div id='alarmInfoText' style='width:90%; max-width: 500px; margin: 0 auto; font-size: 1.5em;'>
+			A fall alarm was received for John Doe from room 3 at 2017 August 30, 12:30:05.
+			Please see the following snapshot taken when the alarm happened.
+		</div>
+		<div>
+			<img id='alarmInfoImage' src='/images/bruyere/alarm_default.png' style='width: 100%; max-width: 600px;'>
+		</div>
+		<div style='padding: 10px; max-width: 300px; margin: 0 auto;'>
+			<button id='alarmInfoClose' type='reset'  class='generalBg generalBtn' data-role='none'>Close</button>
+		</div>
+	</div>
+</div> <!-- alarm info page-->
+</body>
+</html>
