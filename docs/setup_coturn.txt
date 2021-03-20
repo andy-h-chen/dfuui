@@ -1,13 +1,13 @@
-Sample turnserver.conf
-====================================================
+#Sample turnserver.conf
+#====================================================
 # you can listen ports 3478 and 5349 instead of 80/443
 listening-port=3478
 tls-listening-port=5349
 
-listening-ip=10.140.0.2
+listening-ip=10.142.0.2
 
-relay-ip=10.140.0.2
-external-ip=35.221.232.72/10.140.0.2
+relay-ip=10.142.0.2
+external-ip=35.243.186.15/10.142.0.2
 
 realm=wip.remocare.net
 server-name=wip.remocare.net
@@ -19,8 +19,8 @@ server-name=wip.remocare.net
 #user=admin:password
 
 # use real-valid certificate/privatekey files
-cert=/home/andy/local/RTCMultiConnection/ssl/cert1.pem
-pkey=/home/andy/local/RTCMultiConnection/ssl/privkey1.pem
+cert=/etc/letsencrypt/live/wip.remocare.net/cert.pem
+pkey=/etc/letsencrypt/live/wip.remocare.net/privkey.pem
 
 no-stdout-log
 

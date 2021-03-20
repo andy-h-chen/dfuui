@@ -4,7 +4,8 @@ var utils    = require('../../lib/utils'),
     checkErr = utils.checkErr,
     log      = console.log,
     ENV = process.env.NODE_ENV || 'development',
-    DfusController;
+    DfusController,
+    TAG = 'DfusController';
 
 DfusController = function(app, mongoose, config) {
 
@@ -12,11 +13,13 @@ DfusController = function(app, mongoose, config) {
         succededMsg = {result: 'ok'};
 
     // TODO: remove this, if we go with same origins!!!!!!
-    console.log('ENV = ', ENV + ' url = ', config[ENV].URL);
+    console.log(TAG, ' ENV = ', ENV + ' url = ', config[ENV].URL);
+
     if (ENV === 'development') {
       app.options('*', function(req, res, next) {
           console.log('app.options', req.url, req.query);
-          res.header('Access-Control-Allow-Origin', 'http://' + config[ENV].DOMAIN_NAME + ':3000');
+          //res.header('Access-Control-Allow-Origin', 'http://' + config[ENV].DOMAIN_NAME + ':5349');
+          res.header('Access-Control-Allow-Origin', '*');
           res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token");
           res.header("Access-Control-Allow-Methods", "GET,POST,HEAD,OPTIONS,PUT,DELETE,PATCH");
           res.json();

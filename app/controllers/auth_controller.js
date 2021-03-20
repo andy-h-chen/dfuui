@@ -207,7 +207,7 @@ AuthController = function(app, mongoose, passport, config) {
                     } else if (targetAdmin){
                         // TODO: remove ACAO
                         if (ENV === 'development') {
-                          res.header('Access-Control-Allow-Origin', 'http://' + config.DOMAIN_NAME + ':3000');
+                          res.header('Access-Control-Allow-Origin', '*');
                         }
                         res.json({auth: true, token: token, user: {_id: user._id, username: user.username, agentId: user.agentId}});
                         return;
