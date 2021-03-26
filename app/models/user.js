@@ -84,6 +84,10 @@ module.exports = function(mongoose) {
         Dfu.find({'_id': {$in: this.dfus_id}}, {dfuId: 1, _id: 0}).exec(callback);
     };
 
+    User.methods.isAdmin = function() {
+        return this.agentId == 0;
+    };
+
     User.statics.getIdForAllSubAgent = function(agentId, callback) {
         if (agentId === '0') {
             mongoose.model('User').find().exec(callback);

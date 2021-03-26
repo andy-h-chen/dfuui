@@ -6,8 +6,7 @@ var connect = require('connect'),
     session = require('express-session'),
     io = require('socket.io'),
     socketio_jwt = require('socketio-jwt'),
-    jwt = require('jsonwebtoken'),
-    //jwt_secret = 'dfuui secret',
+    //jwt = require('jsonwebtoken'),
     connectTimeout = require('connect-timeout'),
     mongoose = require('mongoose'),
     passport = require('passport'),
@@ -224,13 +223,18 @@ utils.loadConfig(__dirname + '/config', function(config) {
 					console.log('early return for alarm');
                     return;
                 }*/
-				console.log(type, client.dfus, msg.dfuId);
-				for (var i=0; i<client.dfus.length; i++) {
-					if (client.dfus[i].dfuId == msg.dfuId) {
-						client.emit(type, msg);
-						break;
-					}
-				}
+				console.log('dfuPostMsgHandler', type, client.dfus, msg.dfuId, client.user.isAdmin());
+                if (client.user.isAdmin()) {
+                    client.emit(type, msg);
+                } else {
+    				for (var i=0; i<client.dfus.length; i++) {
+                        console.log('dfuPostMsgHandler', client.dfus[i].dfuId, msg.dfuId);
+    					if (client.dfus[i].dfuId == msg.dfuId) {
+    						client.emit(type, msg);
+    						break;
+    					}
+    				}
+                }
             });
         };
     };

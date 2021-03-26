@@ -12,7 +12,7 @@
     "URL"         : "https://wip.remocare.net",
     "DOMAIN_NAME" : "wip.remocare.net",
     "V1_LOGIN"    : "/api/v1/auth/login",
-    "JWT_SECRET"  : "dfuui secret",
+    "JWT_SECRET"  : "3711bb27c7e0f999d902f3c41500d2adddfda93c754a0093c0ff009e69731c55",
     "SALT"        : "83d88386463f0623",
     "DEMO"        :
     {
