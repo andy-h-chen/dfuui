@@ -6,10 +6,14 @@ Part of this code is borrowed from Alexandru Vladutu's demo project(https://gith
 ## Setup
 
 - Allow nodejs to listen port 80:
-    sudo apt-get install libcap2-bin
-    sudo setcap cap_net_bind_service=+ep /usr/bin/nodejs
+    `sudo apt-get install libcap2-bin
+    `sudo setcap cap_net_bind_service=+ep /usr/bin/nodejs
 - Host multiple domain - https://github.com/virtkick/http-master
-- Create folder ssl for https certificates. File names are: cert1.pem, chain1.pem, fullchain1.pem and privkey1.pem.
+- Create folder ssl for https certificates. File names are:
+  `cert1.pem
+  `chain1.pem
+  `fullchain1.pem
+  `privkey1.pem`
 - Setup config/environments/development.json
 - Run `jake app:assets`
 
