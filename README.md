@@ -8,6 +8,7 @@ Part of this code is borrowed from Alexandru Vladutu's demo project(https://gith
 - Allow nodejs to listen port 80:
 
     sudo apt-get install libcap2-bin
+
     sudo setcap cap_net_bind_service=+ep /usr/bin/nodejs
 
 - Host multiple domain - https://github.com/virtkick/http-master
