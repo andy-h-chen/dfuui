@@ -62,7 +62,7 @@
   "scripts": {
     "test": "mocha",
     "start": "NODE_ENV=development FOREVER_ROOT=$HOME/local/dfuui/forever forever start app.js",
-    "stop": "NODE_ENV=development FOREVER_ROOT=$HOME/local/dfuui/forever forever stop app.js"
+    "stop": "FOREVER_ROOT=$HOME/local/dfuui/forever forever stop app.js"
   },
   "eslintConfig": {
     "env": {

@@ -85,6 +85,20 @@ gui.utils = (function(){
     return api;
 }());
 
+// convert string to number recursively for object
+gui.convert_number = function(data) {
+  for (const key of Object.keys(data)) {
+    var value = data[key];
+    if (value instanceof Object) {
+        gui.convert_number(data[key]);
+    } else {
+        var result = Number(value);
+        if (!isNaN(result))
+            data[key] = result;
+    }
+  }
+}
+
 gui.error = (function(){
     var api = {
         /** Wraps a function in a try/catch.

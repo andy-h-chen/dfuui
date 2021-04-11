@@ -820,7 +820,9 @@ gui.initReportsUI = function() {
         var self = this,
             indexBound = this.getIndexBound();
         for (var i=indexBound.start; i<indexBound.end; i++) {
-            var result = $.grep(this.data[this.arrayFieldName], function(e) { return e[self.indexFieldName] === i;});
+            var result = $.grep(this.data[this.arrayFieldName], function(e) {
+                return e[self.indexFieldName] === i;
+            });
             if (result.length === 0) {
                 var elm = {};
                 elm[this.indexFieldName] = i;
@@ -887,8 +889,9 @@ gui.initReportsUI = function() {
                         callback(null);
                         return;
                     }
-                    saveHistoryData(year, month, day, type, value.response.Interaction[remoteDataFieldName]);
-                    console.log(value.response.Interaction);
+                    //saveHistoryData(year, month, day, type, value.response.Interaction[remoteDataFieldName]);
+                    //console.log(value.response.Interaction);
+                    gui.convert_number(value.response.Interaction);
                     callback(value.response.Interaction[remoteDataFieldName]);
                 }
             };
@@ -902,6 +905,15 @@ gui.initReportsUI = function() {
         }
         this.data = data[0];
         if (this.data && this.data[this.arrayFieldName]) {
+            // remove $
+            var array = this.data[this.arrayFieldName];
+            for (const elm of array) {
+                if (Object.keys(elm).length == 1 && Object.keys(elm)[0] == '$') {
+                    var value = elm.$;
+                    var index = array.indexOf(elm);
+                    array[index] = value;
+                }
+            }
             completeAndSort.bind(this)();
             var d = this.data[this.arrayFieldName];
             for (var i=0 && d; i<d.length; i++) {
