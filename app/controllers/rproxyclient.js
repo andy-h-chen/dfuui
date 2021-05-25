@@ -340,7 +340,7 @@ function RproxyClientAuth(app, config, mongoose, logger) {
   }
   var handleMessageWithImage = function(result, data, callback) {
     var dataLength = result.Interaction.Data ? parseInt(result.Interaction.Data[0].$.Length) : 0;
-    //console.log("handleMessageWithImage data.length = " + data.length + " result.Interaction.Data.Length = " + dataLength, " header.length = ", self.currentHeader.length, " TlvHeaderLength = " + rproxyClientUtils.TlvHeaderLength);
+    console.log("handleMessageWithImage data.length = " + data.length + " result.Interaction.Data.Length = " + dataLength, " header.length = ", self.currentHeader.length, " TlvHeaderLength = " + rproxyClientUtils.TlvHeaderLength);
     if ((data.length > self.currentHeader.length + rproxyClientUtils.TlvHeaderLength) && dataLength != 0) {
       logger.info("handleMessageWithImage read image data");
       self.currentResult = result;
@@ -357,7 +357,7 @@ function RproxyClientAuth(app, config, mongoose, logger) {
       }
     } else if (dataLength != 0) {
       self.currentResult = result;
-      self.currentImageBuffer = new Buffer(dataLength);
+      self.currentImageBuffer = Buffer.alloc(dataLength);
       self.currentImageBufferContentLength = dataLength;
       self.readImageCallback = callback;
       // more data to come
