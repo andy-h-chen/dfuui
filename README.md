@@ -10,9 +10,9 @@ Part of this code is borrowed from Alexandru Vladutu's demo project(https://gith
 - Sample http-master.config is at docs/http-master.conf.
 - Allow nodejs to listen port 80 from this app:
 
-    sudo apt-get install libcap2-bin
+    `sudo apt-get install libcap2-bin
 
-    sudo setcap cap_net_bind_service=+ep /usr/bin/nodejs
+    sudo setcap cap_net_bind_service=+ep /usr/bin/nodejs`
 
 - If you want to directly serve the domain from this app, you need to create folder ssl for https certificates.
 
