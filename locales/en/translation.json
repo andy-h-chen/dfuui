@@ -1,0 +1,39 @@
+{
+    "email": {
+        "newUser": {
+            "subject": "Welcome to RemoCare",
+            "text": "Hello, Dear Caregiver\n\nA new RemoCare site({{deviceName}}) is registered at RemoCare with this email.\n\nPlease click this link ({{loginLink}}) to log in and manage your account.\n\nYour log in email: {{email}}\n\nYour password: {{password}}\n\nPlease set your own password right away upon your first log-in.\n\nFor more information, please contact us at info@remotron.com.\n\nRemoCare Team",
+            "html": "Hello, Dear Caregiver<br><br>A new RemoCare site({{deviceName}}) is registered at RemoCare with this email.<br><br>Please click <a href='{{loginLink}}'>this link</a> to log in and manage your account.<br><br>Your log in email: {{email}}<br><br>Your password: {{password}}<br><br>Please set your own password right away upon your first log-in.<br><br>For more information, please contact us at info@remotron.com.<br><br>RemoCare Team"
+        },
+        "newDfu": {
+            "subject": "New site registered at RemoCare",
+            "text": "Hello, Dear Caregiver\n\nA new RemoCare site({{deviceName}}) is registered at RemoCare with this email.\n\nPlease click this link ({{url}}) to log in and manage your account.\n\nFor more information, please contact us at info@remotron.com.\n\nRemoCare Team",
+            "html": "Hello, Dear Caregiver<br><br>A new RemoCare site({{deviceName}}) is registered at RemoCare with this email.<br><br>Please click <a href='{{url}}'>this link</a> to log in and manage your account.<br><br>For more information, please contact us at info@remotron.com.<br><br>RemoCare Team"
+        },
+        "sosAlarm": {
+            "subject": "SOS Alarm triggered by site {{deviceName}}",
+            "text": "SOS Alarm triggered by site {{deviceName}} at {{date}}. Click link to check alarming RemoCare site: {{url}}.",
+            "html": "SOS Alarm triggered by site {{deviceName}} at {{date}}. Click link to check alarming RemoCare site: <a href='{{url}}'>{{url}}</a>."
+        },
+        "mobilityAlarm": {
+            "subject": "Mobility Alarm triggered by site {{deviceName}}",
+            "text": "Mobility Observation Alarm triggered by site {{deviceName}} at {{date}}. Info: {{info}}. Click link to check alarming RemoCare site: {{url}}.",
+            "html": "Mobility Observation Alarm triggered by site {{deviceName}} at {{date}}. Info: {{info}}. Click link to check alarming RemoCare site: {{url}}."
+        },
+        "wanderInAlarm": {
+            "subject": "Wander In Alarm triggered by site {{deviceName}}",
+            "text": "Enter door Alarm triggered by site {{deviceName}} at {{date}}. Click link to check alarming RemoCare site: {{url}}.",
+            "html": "Enter door Alarm triggered by site {{deviceName}} at {{date}}. Click link to check alarming RemoCare site: {{url}}."
+        },
+        "wanderOutAlarm": {
+            "subject": "Wander Out Alarm triggered by site {{deviceName}}",
+            "text": "Exit door Alarm triggered by site {{deviceName}} at {{date}}. Click link to check alarming RemoCare site: {{url}}.",
+            "html": "Exit door Alarm triggered by site {{deviceName}} at {{date}}. Click link to check alarming RemoCare site: {{url}}."
+        },
+        "fallAlarm": {
+            "subject": "Fall Alarm triggered by site {{deviceName}}",
+            "text": "Fall Alarm triggered by site {{deviceName}} at {{date}}. Click link to check alarming RemoCare site: {{url}}.",
+            "html": "Fall Alarm triggered by site {{deviceName}} at {{date}}. Click link to check alarming RemoCare site: {{url}}."
+        }
+    }
+}

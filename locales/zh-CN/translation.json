@@ -1,0 +1,33 @@
+{
+    "email": {
+        "newUser": {
+            "subject": "Welcome to RemoCare",
+            "html": "您好，亲爱的用户,<br><br>您的邮箱被加入了一个RemoCare站点. 请点击 {{url}} 登陆和管理您的账号。<br><br>您的登陆邮箱: {{email}}<br><br>您的暂用口令: {{password}}<br><br>请在第一次登录后立即设置您自己的口令。<br><br>如需要更多信息，请联系我们 info@remotron.com.<br><br>RemoCare团队"
+        },
+        "newDfu": {
+            "subject": "New site registered at RemoCare",
+            "html": "您好，亲爱的用户<br><br>一个新的 RemoCare站点以这个电子邮件信箱注册，请点击 {{url}} 登陆和管理您的账号。<br><br>您的登陆邮箱: {{email}}<br><br>您的暂用口令: {{password}}<br><br>请在第一次登录后立即设置您自己的口令。<br><br>如需要更多信息，请联系我们 info@remotron.com.<br><br>RemoCare团队"
+        },
+        "sosAlarm": {
+            "subject": "SOS Alarm triggered by site {{deviceName}}",
+            "html": "呼救按钮触发报警，报警站点：{{deviceName}}, 报警时间： {{date}}. 点击链接查看报警地点: <a href='{{url}}'>{{url}}</a>."
+        },
+        "mobilityAlarm": {
+            "subject": "Mobility Alarm triggered by site {{deviceName}}",
+            "html": "活动量统计触发报警 ，报警站点：{{deviceName}}, 报警时间： {{date}}. {{info}}。点击链接查看报警地点: <a href='{{url}}'>{{url}}</a>."
+        },
+        "wanderInAlarm": {
+            "subject": "Wander In Alarm triggered by site {{deviceName}}",
+            "html": "进门检测触发报警， 报警站点：{{deviceName}}, 报警时间： {{date}}. 点击链接查看报警地点: <a href='{{url}}'>{{url}}</a>.<br><br>请查看邮件附带的现场照片"
+        },
+        "wanderOutAlarm": {
+            "subject": "Wander Out Alarm triggered by site {{deviceName}}",
+
+            "html": "出门检测触发报警，报警站点：{{deviceName}}, 报警时间： {{date}}. 点击链接查看报警地点: <a href='{{url}}'>{{url}}</a>.<br><br>请查看邮件附带的现场照片"
+        },
+        "fallAlarm": {
+            "subject": "Fall Alarm triggered by site {{deviceName}}",
+            "html": "摔倒检测触发报警， 报警站点：{{deviceName}}, 报警时间： {{date}}. 点击链接查看报警地点: <a href='{{url}}'>{{url}}</a>.<br><br>请查看邮件附带的现场照片"
+        }
+    }
+}
