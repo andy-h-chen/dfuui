@@ -2,7 +2,7 @@
     "email": {
         "newUser": {
             "subject": "Welcome to RemoCare",
-            "html": "您好，亲爱的用户,<br><br>您的邮箱被加入了一个RemoCare站点. 请点击 {{url}} 登陆和管理您的账号。<br><br>您的登陆邮箱: {{email}}<br><br>您的暂用口令: {{password}}<br><br>请在第一次登录后立即设置您自己的口令。<br><br>如需要更多信息，请联系我们 info@remotron.com.<br><br>RemoCare团队"
+            "html": "您好，亲爱的用户,<br><br>您的邮箱被加入了一个RemoCare站点({{deviceName}}). 请点击 {{loginLink}} 登陆和管理您的账号。<br><br>您的登陆邮箱: {{email}}<br><br>您的暂用口令: {{password}}<br><br>请在第一次登录后立即设置您自己的口令。<br><br>如需要更多信息，请联系我们 info@remotron.com.<br><br>RemoCare团队"
         },
         "newDfu": {
             "subject": "New site registered at RemoCare",
