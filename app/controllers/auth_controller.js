@@ -129,7 +129,7 @@ AuthController = function(app, mongoose, passport, config) {
                     if (!user) {
                         return done(null, false, {message: 'Unknown user' + username});
                     }
-                    var hash = passwordhasher.createHash('ssha512', password, new Buffer(app.salt));
+                    var hash = passwordhasher.createHash('ssha512', password, Buffer.from(app.salt, "hex"));
                     var result = hash.hash.toString('hex');
                     if (result === user.password) {
                         return done(null, user);
@@ -263,7 +263,7 @@ AuthController = function(app, mongoose, passport, config) {
 
     app.post(v1 + '/auth/changepassword', app.ensureAuthenticated, function(req, res, next) {
         console.log('changepassword', req.body.oldPassword, req.body.newPassword, req.body.repeat);
-        var hash = passwordhasher.createHash('ssha512', req.body.oldPassword, new Buffer(app.salt));
+        var hash = passwordhasher.createHash('ssha512', req.body.oldPassword, Buffer.from(app.salt, "hex"));
         var result = hash.hash.toString('hex');
         if (result !== req.user.password) {
             res.json({error: 'Old password incorrect.'});
@@ -277,7 +277,7 @@ AuthController = function(app, mongoose, passport, config) {
             res.json({error: 'New password must be at least 5 characters.'});
             return;
         }
-        hash = passwordhasher.createHash('ssha512', req.body.newPassword, new Buffer(app.salt));
+        hash = passwordhasher.createHash('ssha512', req.body.newPassword, Buffer.from(app.salt, "hex"));
         result = hash.hash.toString('hex');
         User.update({_id: req.user._id}, {$set: { password: result}}, function(err, numAffected) {
             if (err) {
