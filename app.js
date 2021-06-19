@@ -64,15 +64,6 @@ require('bcrypt-nodejs').genSalt(10, function(err, salt) {
     app.salt = salt;
 });
 */
-app.canAccessAdmin = function(req, res, next) {
-    if (req.isAuthenticated() && req.user.hasAccess('access_admin')) {
-        return next();
-    }
-
-    res.json({
-        error: 'No access to admin.'
-    });
-}
 
 var sslOptions;
 try{

@@ -94,12 +94,11 @@ AuthController = function(app, mongoose, passport, config) {
     app.use('/jqm', express['static'](__dirname + '/../../node_modules/jquery-mobile/dist'));
     var User = mongoose.model('User');
     
-    passport.use(new JWTStrategy({
+    passport.use("has_perm_jwt", new JWTStrategy({
             jwtFromRequest: ExtractJWT.fromHeader('x-access-token'),
             secretOrKey   : config.JWT_SECRET
         },
         function (jwtPayload, done) {
-          console.log('jwtPayload = ', jwtPayload);
           if (jwtPayload.agentId !== '') {
             return done(null, jwtPayload);
           } else {
@@ -117,6 +116,18 @@ AuthController = function(app, mongoose, passport, config) {
                 return done(err);
               }
             });*/
+        }
+    ));
+    passport.use("is_admin_jwt", new JWTStrategy({
+            jwtFromRequest: ExtractJWT.fromHeader('x-access-token'),
+            secretOrKey   : config.JWT_SECRET
+        },
+        function (jwtPayload, done) {
+          if (jwtPayload.agentId == '0') {
+            return done(null, jwtPayload);
+          } else {
+            return done({err:'no permission'});
+          }
         }
     ));
     passport.use(new LocalStrategy(
@@ -163,7 +174,8 @@ AuthController = function(app, mongoose, passport, config) {
         });
     });
     
-    app.hasPermission = passport.authenticate('jwt', {session: false});
+    app.hasPermission = passport.authenticate('has_perm_jwt', {session: false});
+    app.canAccessAdmin = passport.authenticate('is_admin_jwt', {session: false});
     
    var doAuthentication = function(req, res, next) {
         app.logger.info('doAuthentication Login attempt: ', req.body.username, req.params.username, req.query.username);

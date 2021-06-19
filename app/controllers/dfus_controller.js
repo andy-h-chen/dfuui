@@ -15,16 +15,7 @@ DfusController = function(app, mongoose, config) {
     // TODO: remove this, if we go with same origins!!!!!!
     console.log(TAG, ' ENV = ', ENV + ' url = ', config[ENV].URL);
 
-    if (ENV === 'development') {
-      app.options('*', function(req, res, next) {
-          console.log('app.options', req.url, req.query);
-          //res.header('Access-Control-Allow-Origin', 'http://' + config[ENV].DOMAIN_NAME + ':5349');
-          res.header('Access-Control-Allow-Origin', '*');
-          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token");
-          res.header("Access-Control-Allow-Methods", "GET,POST,HEAD,OPTIONS,PUT,DELETE,PATCH");
-          res.json();
-      });
-    }
+
     app.get(app.v1 + '/dfus', app.hasPermission, function index(req, res, next) {
     //app.get(app.v1 + '/dfus', function index(req, res, next) {
         console.log(req.url, req.query);
@@ -150,8 +141,9 @@ DfusController = function(app, mongoose, config) {
           if (err) {
               res.json({error: 'Not Found'});
           } else {
-              dfu.remove();
-              res.json(succededMsg);
+            console.log("Delete dfu id = ", dfu.id);
+            dfu.remove();
+            res.json(succededMsg);
           }
         });
     });

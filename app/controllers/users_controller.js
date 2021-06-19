@@ -12,6 +12,31 @@ UsersController = function(app, mongoose, config) {
 
     var User = mongoose.model('User'),
         succededMsg = {result: 'ok'};
+    if (ENV === 'development') {
+      app.options('*', function(req, res, next) {
+          console.log('app.options', req.url, req.query);
+          //res.header('Access-Control-Allow-Origin', 'http://' + config[ENV].DOMAIN_NAME + ':5349');
+          res.header('Access-Control-Allow-Origin', '*');
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token");
+          res.header("Access-Control-Allow-Methods", "GET,POST,HEAD,OPTIONS,PUT,DELETE,PATCH");
+          res.json();
+      });
+    }
+
+    app.delete(v1 + '/users/:id', app.canAccessAdmin, function destroy(req, res, next) {
+      User.findById(req.params.id, false /* details */, function(err, user) {
+        res.header('Access-Control-Allow-Origin', '*');
+        if (err) {
+          res.json(errors);
+        } else if (!user) {
+          res.json({"error": "User not found"});
+        } else {
+          console.log("Delete user id", user.id);
+          user.remove();
+          res.json(succededMsg);
+        }
+      });
+    });
 
     app.get(v1 + '/users', function index(req, res, next) {
     //app.get(v1 + '/users', app.canAccessAdmin, function index(req, res, next) {
@@ -168,18 +193,7 @@ UsersController = function(app, mongoose, config) {
 
   });
 
-  app.delete(v1 + '/users/:id', app.canAccessAdmin, function destroy(req, res, next) {
-    User.findById(req.params.id, false /* details */, function(err, user) {
-      checkErr(
-        next,
-        [{ cond: err }, { cond: !user, err: new NotFound('json') }],
-        function() {
-          user.remove();
-          res.json({});
-        }
-      );
-    });
-  });
+
 };
 
 module.exports = UsersController;
