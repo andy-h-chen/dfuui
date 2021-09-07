@@ -23,3 +23,10 @@ Part of this code is borrowed from Alexandru Vladutu's demo project(https://gith
 - Run `npm install` to install project dependencies
 - Setup mongo database. See documents in `docs/`.
 - Run `jake app:assets`
+
+## Access RTCMulticonnection admin
+
+- Login using `admin`
+- Copy the token from url
+- Go to https://wip.remocare.net/rtcmulticonnection-admin/
+- Add `?token=<token>`
