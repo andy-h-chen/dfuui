@@ -147,6 +147,33 @@ DfusController = function(app, mongoose, config) {
           }
         });
     });
+    app.patch(app.v1 + '/dfus/:id/caregivers', app.hasPermission, function(req, res, next) {
+        console.log("patch", req.params.id, req.body.remove, "caregiver_id=", req.body.caregiver_id);
+        if (ENV === 'development') {
+          res.header('Access-Control-Allow-Origin', '*');
+        }
+        if (!req.body || req.body.caregiver_id === undefined || req.body.remove != true) {
+            res.status(422).send("err: params incomplete.");
+            return;
+        }
+
+        Dfu.update({ _id: req.params.id }, { $pull: { users_id: { $in: [req.body.caregiver_id] } } }, function(err, result) {
+          if (err) {
+            console.log(err);
+            res.json({error: 'Not Found'});
+            return;
+          }
+          res.json(succededMsg);
+          var User = mongoose.model('User');
+          User.update({ _id: req.body.caregiver_id }, { $pull: { dfus_id: req.params.id } }, function(err, r) {
+            if (err) {
+              console.log('Error on User.update for removing caregivers', err, req.params.id, req.body.caregiver_id);
+              return;
+            }
+            console.log('User update succeed.')
+          });
+        });
+    });
 };
 
 module.exports = DfusController;
