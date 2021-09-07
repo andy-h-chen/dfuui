@@ -28,5 +28,5 @@ Part of this code is borrowed from Alexandru Vladutu's demo project(https://gith
 
 - Login using `admin`
 - Copy the token from url
-- Go to https://wip.remocare.net/rtcmulticonnection-admin/
+- Go to https://<domain name>/rtcmulticonnection-admin/
 - Add `?token=<token>`
